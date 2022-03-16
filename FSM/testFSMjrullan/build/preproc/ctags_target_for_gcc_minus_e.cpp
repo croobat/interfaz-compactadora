@@ -1,3 +1,4 @@
+# 1 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/testFSMjrullan/testFSMjrullan.ino"
 /*/*****************************************************************/
 /* **/
 /* *                STATE MACHINE EXAMPLE SKETCH*/
@@ -178,7 +179,7 @@
 * Created:          02/16/22
 * Description:      Código principal de la máquina de estados
 *****************************************************************************/
-#include <StateMachine.h>
+# 182 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/testFSMjrullan/testFSMjrullan.ino" 2
 /* #include <YA_FSM.h> */
 
 /* ---------------------- */
@@ -231,15 +232,15 @@ StateMachine machine = StateMachine();
 StateMachine opMachine = StateMachine();
 
 // Definición de estados de la maquina, funciones definidas abajo
-State* S0       = machine.addState(&state0);
-State* Idle     = machine.addState(&stateIdle);
-State* Fill     = machine.addState(&stateFill);
-State* Extract  = machine.addState(&stateExtract);
-State* Compact  = machine.addState(&stateCompact);
-State* Lift     = machine.addState(&stateLift);
-State* Halt     = machine.addState(&stateHalt);
-State* Reset    = machine.addState(&stateReset);
-State* Stop     = machine.addState(&stateStop);
+State* S0 = machine.addState(&state0);
+State* Idle = machine.addState(&stateIdle);
+State* Fill = machine.addState(&stateFill);
+State* Extract = machine.addState(&stateExtract);
+State* Compact = machine.addState(&stateCompact);
+State* Lift = machine.addState(&stateLift);
+State* Halt = machine.addState(&stateHalt);
+State* Reset = machine.addState(&stateReset);
+State* Stop = machine.addState(&stateStop);
 
 /* ---------------------- */
 /* -  Setup inicial  - */
@@ -247,7 +248,7 @@ State* Stop     = machine.addState(&stateStop);
 void setup()
 {
     Serial.begin(115200);
-    pinMode(TEST_LED, OUTPUT); // test
+    pinMode(TEST_LED, 0x1); // test
     randomSeed(A0); // test
 
 }
@@ -255,15 +256,15 @@ void setup()
 /* ---------------------- */
 /* -  Transiciones  - */
 /* ---------------------- */
-  S0->      addTransition(&transitionS0Idle,        Idle);
-  Idle->    addTransition(&transitionIdleFill,      Fill);
-  Fill->    addTransition(&transitionFillExtract,   Extract);
+  S0-> addTransition(&transitionS0Idle, Idle);
+  Idle-> addTransition(&transitionIdleFill, Fill);
+  Fill-> addTransition(&transitionFillExtract, Extract);
   Extract-> addTransition(&transitionExtractCompact,Compact);
-  Compact-> addTransition(&transitionCompactLift,   Lift);
-  Lift->    addTransition(&transitionLiftHalt,      Halt);
-  Halt->    addTransition(&transitionHaltReset,     Reset);
-  Reset->   addTransition(&transitionResetStop,     Stop);
-  Stop->    addTransition(&transitionStopIdle,      S0);
+  Compact-> addTransition(&transitionCompactLift, Lift);
+  Lift-> addTransition(&transitionLiftHalt, Halt);
+  Halt-> addTransition(&transitionHaltReset, Reset);
+  Reset-> addTransition(&transitionResetStop, Stop);
+  Stop-> addTransition(&transitionStopIdle, S0);
 }
 
 

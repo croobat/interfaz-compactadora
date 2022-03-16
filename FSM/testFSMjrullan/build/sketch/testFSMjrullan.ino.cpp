@@ -1,3 +1,5 @@
+#include <Arduino.h>
+#line 1 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/testFSMjrullan/testFSMjrullan.ino"
 /*/*****************************************************************/
 /* **/
 /* *                STATE MACHINE EXAMPLE SKETCH*/
@@ -244,6 +246,9 @@ State* Stop     = machine.addState(&stateStop);
 /* ---------------------- */
 /* -  Setup inicial  - */
 /* ---------------------- */
+#line 247 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/testFSMjrullan/testFSMjrullan.ino"
+void setup();
+#line 247 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/testFSMjrullan/testFSMjrullan.ino"
 void setup()
 {
     Serial.begin(115200);
@@ -370,3 +375,4 @@ void stateStop(){
 bool transitionStopIdle(){
     return true;
 }
+

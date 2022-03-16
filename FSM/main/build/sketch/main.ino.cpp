@@ -1,3 +1,5 @@
+#include <Arduino.h>
+#line 1 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
 /******************************************************************************
 * File:             main.ino
 *
@@ -58,6 +60,47 @@ StateMachine machine = StateMachine();
 /* StateMachine opMachine = StateMachine(); */
 
 // Definición de estados de la maquina, funciones definidas abajo
+#line 74 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+void setup();
+#line 99 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+void loop();
+#line 110 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+void state0();
+#line 116 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+bool transitionS0Idle();
+#line 121 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+void stateIdle();
+#line 126 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+bool transitionIdleFill();
+#line 131 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+void stateFill();
+#line 136 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+bool transitionFillExtract();
+#line 141 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+void stateExtract();
+#line 146 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+bool transitionExtractCompact();
+#line 151 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+void stateCompact();
+#line 156 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+bool transitionCompactLift();
+#line 161 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+void stateLift();
+#line 166 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+bool transitionLiftHalt();
+#line 171 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+void stateHalt();
+#line 176 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+bool transitionHaltReset();
+#line 181 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+void stateReset();
+#line 186 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+bool transitionResetStop();
+#line 191 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+void stateStop();
+#line 196 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+bool transitionStopIdle();
+#line 61 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
 State* S0       = machine.addState(&state0);
 State* Idle     = machine.addState(&stateIdle);
 State* Fill     = machine.addState(&stateFill);
@@ -196,3 +239,4 @@ void stateStop(){
 bool transitionStopIdle(){
     return true;
 }
+

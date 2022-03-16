@@ -1,3 +1,5 @@
+#include <StateMachine.h>
+
 /******************************************************************************
 * File:             main.ino
 *
@@ -5,8 +7,6 @@
 * Created:          02/16/22
 * Description:      Código principal de la máquina de estados
 *****************************************************************************/
-#include <StateMachine.h>
-/* #include <YA_FSM.h> */
 
 /* ---------------------- */
 /* -  Ignorar  - */
@@ -46,6 +46,9 @@
 /* #define CYL_CARRERA 5000 */
 /* #define CARTON_EXTRACCION 2000 */
 
+// Librería para maquinas de estado
+//#include <StateMachine.h>
+
 // Delay en loop
 const int STATE_DELAY = 1000;
 int randomState = 0; // test
@@ -55,7 +58,7 @@ const int TEST_LED = 13;
 StateMachine machine = StateMachine();
 
 // Maquina de estados secundaria (operando/no operando)
-/* StateMachine opMachine = StateMachine(); */
+StateMachine opMachine = StateMachine();
 
 // Definición de estados de la maquina, funciones definidas abajo
 State* S0       = machine.addState(&state0);
@@ -74,22 +77,23 @@ State* Stop     = machine.addState(&stateStop);
 void setup()
 {
     Serial.begin(115200);
-    pinMode(TEST_LED, OUTPUT); // test
+    pinMode(LED, OUTPUT); // test
     randomSeed(A0); // test
 
-    /* ---------------------- */
-    /* -  Transiciones  - */
-    /* ---------------------- */
+}
 
-    S0->      addTransition(&transitionS0Idle,        Idle);
-    Idle->    addTransition(&transitionIdleFill,      Fill);
-    Fill->    addTransition(&transitionFillExtract,   Extract);
-    Extract-> addTransition(&transitionExtractCompact,Compact);
-    Compact-> addTransition(&transitionCompactLift,   Lift);
-    Lift->    addTransition(&transitionLiftHalt,      Halt);
-    Halt->    addTransition(&transitionHaltReset,     Reset);
-    Reset->   addTransition(&transitionResetStop,     Stop);
-    Stop->    addTransition(&transitionStopIdle,      S0);
+/* ---------------------- */
+/* -  Transiciones  - */
+/* ---------------------- */
+  S0->      addTransition(&transitionS0Idle,        Idle);
+  Idle->    addTransition(&transitionIdleFill,      Fill);
+  Fill->    addTransition(&transitionFillExtract,   Extract);
+  Extract-> addTransition(&transitionExtractCompact,Compact);
+  Compact-> addTransition(&transitionCompactLift,   Lift);
+  Lift->    addTransition(&transitionLiftHalt,      Halt);
+  Halt->    addTransition(&transitionHaltReset,     Reset);
+  Reset->   addTransition(&transitionResetStop,     Stop);
+  Stop->    addTransition(&transitionStopIdle,      S0);
 }
 
 
@@ -109,7 +113,7 @@ void loop() {
 //==================< S0 >=====================
 void state0(){
     Serial.println("State 0");
-    digitalWrite(TEST_LED, !digitalRead(TEST_LED));
+    digitalWrite(LED, !digitalRead(LED));
 }
 
 //-----< De S0 a Inactivo >-----
