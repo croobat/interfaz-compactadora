@@ -1,3 +1,11 @@
+/******************************************************************************
+* File:             main.ino
+*
+* Author:           Luis Antonio Ramírez García, Anel Madai Perales Avila
+* Created:          02/16/22
+* Description:      Código principal de la máquina de estados
+*****************************************************************************/
+
 #include <YA_FSM.h>
 
 // Pines de entradas
@@ -42,6 +50,7 @@ const byte HALT_CYL = 13;
 
 // Delay en loop
 const int STATE_DELAY = 1000;
+int randomState = 0; // test
 const int TEST_LED = 13;
 
 // Maquina de estados principal
@@ -50,7 +59,7 @@ StateMachine machine = StateMachine();
 // Maquina de estados secundaria (operando/no operando)
 StateMachine opMachine = StateMachine();
 
-// Estados de la maquina, funciones definidas abajo
+// Definición de estados de la maquina, funciones definidas abajo
 State* S0       = machine.addState(&state0);
 State* Idle     = machine.addState(&stateIdle);
 State* Fill     = machine.addState(&stateFill);
@@ -62,9 +71,130 @@ State* Reset    = machine.addState(&stateReset);
 State* Stop     = machine.addState(&stateStop);
 
 /* ---------------------- */
+/* -  Setup inicial  - */
+/* ---------------------- */
+void setup()
+{
+    Serial.begin(115200);
+    pinMode(LED, OUTPUT); // test
+    randomSeed(A0); // test
+
+}
+
+/* ---------------------- */
+/* -  Transiciones  - */
+/* ---------------------- */
+  S0->addTransition(&transitionS0Idle,Idle);
+  Idle->addTransition(&transitionIdleFill,Fill);
+  Fill->addTransition(&transitionFillExtract,Extract);
+  Extract->addTransition(&transitionExtractCompact,Compact);
+  Compact->addTransition(&transitionCompactLift,Lift);
+  Lift->addTransition(&transitionLiftHalt,Halt);
+  Halt->addTransition(&transitionHaltReset,Reset);
+  Reset->addTransition(&transitionResetStop,Stop);
+  Stop->addTransition(&transitionStopIdle,S0);
+}
+
+
+/* ---------------------- */
 /* -  Loop infinito  - */
 /* ---------------------- */
 void loop() {
     machine.run();
     delay(STATE_DELAY);
+}
+
+
+/* ---------------------- */
+/* -  Estados  - */
+/* ---------------------- */
+
+//==================< S0 >=====================
+void S0(){
+    Serial.println("State 0");
+}
+
+//-----< De S0 a Inactivo >-----
+bool transitionS0Idle(){
+    return true;
+}
+
+//==================< Idle >=====================
+void Idle(){
+    Serial.println("Inactivo");
+}
+
+//-----< De Inactivo a Rellenar >-----
+bool transitionIdleFill(){
+    return true;
+}
+
+//==================< Fill >=====================
+void Fill(){
+    Serial.println("Rellenar");
+}
+
+//-----< De Rellenar a Extraer >-----
+bool transitionFillExtract(){
+    return true;
+}
+
+//==================< Extract >=====================
+void Extract(){
+    Serial.println("Extraer");
+}
+
+//-----< De Extraer a Compactar >-----
+bool transitionExtractCompact(){
+    return true;
+}
+
+//==================< Compact >=====================
+void Compact(){
+    Serial.println("Compactar");
+}
+
+//-----< De Compactar a Levantar >-----
+bool transitionCompactLift(){
+    return true;
+}
+
+//==================< Lift >=====================
+void Lift(){
+    Serial.println("Levantar");
+}
+
+//-----< De Levantar a Detener >-----
+bool transitionLiftHalt(){
+    return true;
+}
+
+//==================< Halt >=====================
+void Halt(){
+    Serial.println("Alto");
+}
+
+//-----< De Detener a Reiniciar >-----
+bool transitionHaltReset(){
+    return true;
+}
+
+//==================< Reset >=====================
+void Reset(){
+    Serial.println("Reiniciar");
+}
+
+//-----< De Reiniciar a Paro >-----
+bool transitionResetStop(){
+    return true;
+}
+
+//==================< Stop >=====================
+void Stop(){
+    Serial.println("Paro de emergencia");
+}
+
+//-----< De Paro a Inactivo >-----
+bool transitionStopIdle(){
+    return true;
 }
