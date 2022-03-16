@@ -17,3 +17,17 @@ const byte SOUND_ALARM = 10;
 const byte UPDATE_PRESSURE = 11;
 const byte COMPACTING_CYL = 12;
 const byte HALT_CYL = 13;
+
+// Maquina de estados general
+YA_FSM mainStateMachine;
+// Maquina de estados para operando o noop (necesaria para los led y alarma)
+YA_FSM opStateMachine;
+
+// State Alias
+enum State {INACTIVO, RELLENAR, COMPACTAR, LEVANTAR, DETENER, REINICIO, PARO};
+// Helper para imprimir labels en cambios de estado
+const char * const stateName[] PROGMEM = {"INACTIVO", "RELLENAR", "COMPACTAR", "LEVANTAR", "DETENER", "REINICIO", "PARO", "CALL"};
+
+// Constantes de prueba (timepo de extraccion y tiempo de carrera del cilindro)
+#define CYL_CARRERA 5000
+#define CARTON_EXTRACCION 2000
