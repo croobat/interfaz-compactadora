@@ -18,16 +18,53 @@ const byte UPDATE_PRESSURE = 11;
 const byte COMPACTING_CYL = 12;
 const byte HALT_CYL = 13;
 
-// Maquina de estados general
-YA_FSM mainStateMachine;
-// Maquina de estados para operando o noop (necesaria para los led y alarma)
-YA_FSM opStateMachine;
 
-// State Alias
-enum State {INACTIVO, RELLENAR, COMPACTAR, LEVANTAR, DETENER, REINICIO, PARO};
-// Helper para imprimir labels en cambios de estado
-const char * const stateName[] PROGMEM = {"INACTIVO", "RELLENAR", "COMPACTAR", "LEVANTAR", "DETENER", "REINICIO", "PARO", "CALL"};
+/* ---------------------- */
+/* -  Ignorar  - */
+/* ---------------------- */
 
-// Constantes de prueba (timepo de extraccion y tiempo de carrera del cilindro)
-#define CYL_CARRERA 5000
-#define CARTON_EXTRACCION 2000
+/* // Maquina de estados general */
+/* YA_FSM mainStateMachine; */
+/* // Maquina de estados para operando o noop (necesaria para los led y alarma) */
+/* YA_FSM opStateMachine; */
+
+/* // State Alias */
+/* enum State {INACTIVO, RELLENAR, COMPACTAR, LEVANTAR, DETENER, REINICIO, PARO}; */
+/* // Helper para imprimir labels en cambios de estado */
+/* const char * const stateName[] PROGMEM = {"INACTIVO", "RELLENAR", "COMPACTAR", "LEVANTAR", "DETENER", "REINICIO", "PARO", "CALL"}; */
+
+/* // Constantes de prueba (timepo de extraccion y tiempo de carrera del cilindro) */
+/* #define CYL_CARRERA 5000 */
+/* #define CARTON_EXTRACCION 2000 */
+
+// Librería para maquinas de estado
+#include <StateMachine.h>
+
+// Delay en loop
+const int STATE_DELAY = 1000;
+const int TEST_LED = 13;
+
+// Maquina de estados principal
+StateMachine machine = StateMachine();
+
+// Maquina de estados secundaria (operando/no operando)
+StateMachine opMachine = StateMachine();
+
+// Estados de la maquina, funciones definidas abajo
+State* S0       = machine.addState(&state0);
+State* Idle     = machine.addState(&stateIdle);
+State* Fill     = machine.addState(&stateFill);
+State* Extract  = machine.addState(&stateExtract);
+State* Compact  = machine.addState(&stateCompact);
+State* Lift     = machine.addState(&stateLift);
+State* Halt     = machine.addState(&stateHalt);
+State* Reset    = machine.addState(&stateReset);
+State* Stop     = machine.addState(&stateStop);
+
+/* ---------------------- */
+/* -  Loop infinito  - */
+/* ---------------------- */
+void loop() {
+    machine.run();
+    delay(STATE_DELAY);
+}
