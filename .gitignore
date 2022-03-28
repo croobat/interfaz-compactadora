@@ -1,4 +1,5 @@
 app/bin/
+ITEADLIB_Arduino_Nextion
 app/pde.jar
 build/macosx/work/
 arduino-core/bin/
