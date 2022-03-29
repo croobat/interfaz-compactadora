@@ -82,15 +82,31 @@ void setup()
     /* -  Transiciones  - */
     /* ---------------------- */
 
-    S0-> addTransition(&transitionS0Idle, Idle);
-    Idle-> addTransition(&transitionIdleFill, Fill);
-    Fill-> addTransition(&transitionFillExtract, Extract);
-    Extract-> addTransition(&transitionExtractCompact,Compact);
-    Compact-> addTransition(&transitionCompactLift, Lift);
-    Lift-> addTransition(&transitionLiftHalt, Halt);
-    Halt-> addTransition(&transitionHaltReset, Reset);
-    Reset-> addTransition(&transitionResetStop, Stop);
-    Stop-> addTransition(&transitionStopIdle, S0);
+  //Edo. inicial           Condición booleana       Edo. futuro
+    S0-> addTransition(&transitionS0Idle, Idle); // Al encender
+
+    Idle-> addTransition(&transitionIdleFill, Fill); // Al abrir la puerta
+    Idle-> addTransition(&transitionIdleReset, Reset); // Al apagar
+
+    Fill-> addTransition(&transitionFillExtract, Extract); // >= 20 kg carton & al cerrar la puerta
+    Fill-> addTransition(&transitionFillCompact, Compact); // < 20 kg cartón  & Pulsar botón compactar
+    Fill-> addTransition(&transitionFillLift, Lift); // < 20 kg cartón  & Pulsar botón levantar
+
+    Extract-> addTransition(&transitionExtractIdle, Idle); // Al cerrar la puerta
+
+    Compact-> addTransition(&transitionCompactLift, Lift); // Pulsar botón levantar
+    Compact-> addTransition(&transitionCompactHalt, Halt); // Soltar botón compactar
+
+    Lift-> addTransition(&transitionLiftHalt, Halt); // carrera cilindro > 0 & soltar botón levantar
+    Lift-> addTransition(&transitionLiftIdle, Idle); // carrera cilindro = 0
+
+    Halt-> addTransition(&transitionHaltCompact, Compact); // Pulsar botón compactar
+    Halt-> addTransition(&transitionHaltLift, Lift); // PUlsar botón levantar
+
+    Reset-> addTransition(&transitionResetS0, S0); // Tras reiniciar carrera, luces y alarma
+
+    Stop-> addTransition(&transitionStopReset, Reset); // Pulsar botón de paro
+
 }
 
 
@@ -115,17 +131,35 @@ void state0(){
 
 //-----< De S0 a Inactivo >-----
 bool transitionS0Idle(){
-    return true;
+    if (true) {
+        // Interruptor de encendido
+        return true;
+    }
+    return false;
 }
 
 //==================< Idle >=====================
 void stateIdle(){
     Serial.println("Inactivo");
+    // Actualizar peso
 }
 
 //-----< De Inactivo a Rellenar >-----
 bool transitionIdleFill(){
-    return true;
+    if (true) {
+        // Sensor magnético abierto
+        return true;
+    }
+    return false;
+}
+
+//-----< De Inactivo a Reiniciar >-----
+bool transitionIdleReset(){
+    if (true) {
+        // Interruptor de apagado
+        return true;
+    }
+    return false;
 }
 
 //==================< Fill >=====================
@@ -135,7 +169,29 @@ void stateFill(){
 
 //-----< De Rellenar a Extraer >-----
 bool transitionFillExtract(){
-    return true;
+    if (true && true) {
+        // Peso >= 20 kg & sensor magnético cerrado
+        return true;
+    }
+    return false;
+}
+
+//-----< De Rellenar a Compactar >-----
+bool transitionFillCompact(){
+    if (true && true) {
+        // Peso < 20 kg & pulsar botón compactar
+        return true;
+    }
+    return false;
+}
+
+//-----< De Rellenar a Levantar >-----
+bool transitionFillLift(){
+     if (true && true) {
+        // Peso < 20 kg & pulsar botón levantar
+        return true;
+    }
+    return false;
 }
 
 //==================< Extract >=====================
@@ -143,9 +199,13 @@ void stateExtract(){
     Serial.println("Extraer");
 }
 
-//-----< De Extraer a Compactar >-----
-bool transitionExtractCompact(){
-    return true;
+//-----< De Extraer a Inactivo >-----
+bool transitionExtractIdle(){
+    if (true) {
+        // Sensor magnético cerrado
+        return true;
+    }
+    return false;
 }
 
 //==================< Compact >=====================
@@ -155,7 +215,20 @@ void stateCompact(){
 
 //-----< De Compactar a Levantar >-----
 bool transitionCompactLift(){
-    return true;
+    if (true) {
+        // Pulsar botón levantar
+        return true;
+    }
+    return false;
+}
+
+//-----< De Compactar a Alto >-----
+bool transitionCompactHalt(){
+    if (true) {
+        // Soltar botón compactar
+        return true;
+    }
+    return false;
 }
 
 //==================< Lift >=====================
@@ -163,9 +236,22 @@ void stateLift(){
     Serial.println("Levantar");
 }
 
-//-----< De Levantar a Detener >-----
+//-----< De Levantar a Alto >-----
 bool transitionLiftHalt(){
-    return true;
+    if (true && true) {
+        // carrera cilindro > 0 & soltar botón levantar
+        return true;
+    }
+    return false;
+}
+
+//-----< De Levantar a Inactivo >-----
+bool transitionLiftIdle(){
+    if (true) {
+        // carrera cilindro = 0
+        return true;
+    }
+    return false;
 }
 
 //==================< Halt >=====================
@@ -173,9 +259,22 @@ void stateHalt(){
     Serial.println("Alto");
 }
 
-//-----< De Detener a Reiniciar >-----
-bool transitionHaltReset(){
-    return true;
+//-----< De Alto a Compactar >-----
+bool transitionHaltCompact(){
+    if (true) {
+        // Pulsar botón compactar
+        return true;
+    }
+    return false;
+}
+
+//-----< De Alto a Levantar >-----
+bool transitionHaltLift(){
+    if (true) {
+        // Pulsar botón levantar
+        return true;
+    }
+    return false;
 }
 
 //==================< Reset >=====================
@@ -183,8 +282,9 @@ void stateReset(){
     Serial.println("Reiniciar");
 }
 
-//-----< De Reiniciar a Paro >-----
-bool transitionResetStop(){
+//-----< De Reiniciar a S0 >-----
+bool transitionResetS0(){
+    // Reiniciar carrera, luces y alarma
     return true;
 }
 
@@ -194,6 +294,10 @@ void stateStop(){
 }
 
 //-----< De Paro a Inactivo >-----
-bool transitionStopIdle(){
-    return true;
+bool transitionStopReset(){
+    if (true) {
+        // Pulsar botón de paro
+        return true;
+    }
+    return false;
 }

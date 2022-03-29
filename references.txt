@@ -4,4 +4,5 @@ https://www.arduino.cc/reference/en/libraries/statemachine
 Yet Another FSM - Arduino library
 https://github.com/cotestatnt/YA_FSM
 
-
+HX711_ADC - Arduino library (load cell)
+https://github.com/olkal/HX711_ADC
