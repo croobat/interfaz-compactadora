@@ -1,0 +1,8 @@
+ObjName			Type		Page ID		ID
+
+b0				picture		0			1
+bOn				button		0			2
+bOff			button		0			3	
+h0				slider		0			4		
+tState			text		0			5	
+tSlider			text		0			6
