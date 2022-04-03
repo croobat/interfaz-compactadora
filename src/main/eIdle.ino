@@ -1,6 +1,5 @@
 //==================< Idle >=====================
 void stateIdle(){
-    Serial.println("Inactivo");
 
     /* ---------------------- */
     /* -  Actualizar peso  - */

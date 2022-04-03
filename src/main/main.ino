@@ -36,6 +36,8 @@ State* Stop     = machine.addState(&stateStop);
 
 // Debug
 String accion = "";
+String accion2 = "";
+String accion3 = "";
 const char* onswitch = "switch encendido";
 const char* offswitch = "switch apagado";
 const char* opendoor = "abrir puerta";
@@ -44,7 +46,7 @@ const char* cylbottom = "cilindro en inicio";
 const char* cylmid = "cilindro en camino";
 const char* cyltop = "cilindro en limite";
 const char* kg20carton = "20 kg carton";
-const char* lesskg20cboard = "menos 20 kg carton";
+const char* lesskg20carton = "menos 20 kg carton";
 const char* pushcompactbutton = "presionar compactar";
 const char* releasecompactbutton = "soltar compactar";
 const char* pushliftbutton = "presionar levantar";
@@ -72,9 +74,9 @@ void setup()
     Idle->    addTransition(&transitionIdleFill,      Fill);        // Al abrir la puerta
     Idle->    addTransition(&transitionIdleReset,     Reset);       // Al apagar
 
-    Fill->    addTransition(&transitionFillExtract,   Extract);     // >= 20 kg carton & al cerrar la puerta
-    Fill->    addTransition(&transitionFillCompact,   Compact);     // < 20 kg cartón  & Pulsar botón compactar
-    Fill->    addTransition(&transitionFillLift,      Lift);        // < 20 kg cartón  & Pulsar botón levantar
+    Fill->    addTransition(&transitionFillExtract,   Extract);     // >= 20 kg carton & abrir puerta
+    Fill->    addTransition(&transitionFillCompact,   Compact);     // < 20 kg cartón & cerrar puerta & Pulsar botón compactar
+    Fill->    addTransition(&transitionFillLift,      Lift);        // < 20 kg cartón & cerrar puerta & Pulsar botón levantar
 
     Extract-> addTransition(&transitionExtractIdle,   Idle);        // Al cerrar la puerta
 
