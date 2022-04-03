@@ -34,7 +34,7 @@ bool transitionCompactHalt(){
         /* ---------------------- */
         /* -  test  - */
         /*  ---------------------- */
-        Serial.println("Accion: " + accion + " | hacia levantar");
+        Serial.println("Accion: " + accion + " | hacia alto");
 
         return true;
     }

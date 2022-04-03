@@ -74,9 +74,9 @@ void setup()
     Idle->    addTransition(&transitionIdleFill,      Fill);        // Al abrir la puerta
     Idle->    addTransition(&transitionIdleReset,     Reset);       // Al apagar
 
-    Fill->    addTransition(&transitionFillExtract,   Extract);     // >= 20 kg carton & abrir puerta
     Fill->    addTransition(&transitionFillCompact,   Compact);     // < 20 kg cartón & cerrar puerta & Pulsar botón compactar
     Fill->    addTransition(&transitionFillLift,      Lift);        // < 20 kg cartón & cerrar puerta & Pulsar botón levantar
+    Fill->    addTransition(&transitionFillExtract,   Extract);     // >= 20 kg carton & abrir puerta
 
     Extract-> addTransition(&transitionExtractIdle,   Idle);        // Al cerrar la puerta
 

@@ -5,7 +5,7 @@ void stateLift(){
         /* -  test  - */
         /*  ---------------------- */
         Serial.println("Levantar");
-        Serial.println("Accion 1: ");
+        Serial.println("Accion 1 (cilindro, boton, paro emergencia): ");
         while (Serial.available() == 0) {}
         accion = Serial.readStringUntil('\n');
         accion.trim();
