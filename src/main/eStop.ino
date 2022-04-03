@@ -5,9 +5,6 @@ void stateStop(){
 
 //-----< De Paro a Inactivo >-----
 bool transitionStopReset(){
-    if (false) {
-        // Pulsar botón de paro
-        return true;
-    }
-    return false;
+    Serial.println("Emergencia: Reiniciando sistema")
+    return true;
 }

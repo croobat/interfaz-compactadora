@@ -39,3 +39,17 @@ bool transitionHaltLift(){
     return false;
 }
 
+//-----< De Alto a Stop >-----
+bool transitionHaltStop(){
+    if (accion == emergencystop) {
+        // Pulsar paro de emergencia
+
+        /* ---------------------- */
+        /* -  test  - */
+        /*  ---------------------- */
+        Serial.println("Accion: " + accion + " | hacia paro de emergencia");
+
+        return true;
+    }
+    return false;
+}

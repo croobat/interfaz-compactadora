@@ -46,3 +46,17 @@ bool transitionLiftIdle(){
     return false;
 }
 
+//-----< De Levantar a Stop >-----
+bool transitionLiftStop(){
+    if (accion == emergencystop) {
+        // Pulsar paro de emergencia
+
+        /* ---------------------- */
+        /* -  test  - */
+        /*  ---------------------- */
+        Serial.println("Accion: " + accion + " | hacia paro de emergencia");
+
+        return true;
+    }
+    return false;
+}

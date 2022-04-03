@@ -82,12 +82,15 @@ void setup()
 
     Compact-> addTransition(&transitionCompactLift,   Lift);        // Pulsar botón levantar
     Compact-> addTransition(&transitionCompactHalt,   Halt);        // Soltar botón compactar
+    Compact-> addTransition(&transitionCompactStop,   Stop);        // Pulsar paro de emergencia
 
     Lift->    addTransition(&transitionLiftHalt,      Halt);        // carrera cilindro > 0 & soltar botón levantar
     Lift->    addTransition(&transitionLiftIdle,      Idle);        // carrera cilindro = 0
+    Lift->    addTransition(&transitionLiftStop,      Stop);        // Pulsar paro de emergencia
 
     Halt->    addTransition(&transitionHaltCompact,   Compact);     // Pulsar botón compactar
-    Halt->    addTransition(&transitionHaltLift,      Lift);        // PUlsar botón levantar
+    Halt->    addTransition(&transitionHaltLift,      Lift);        // Pulsar botón levantar
+    Halt->    addTransition(&transitionHaltStop,      Stop);        // Pulsar paro de emergencia
 
     Reset->   addTransition(&transitionResetS0,       S0);          // Tras reiniciar carrera, luces y alarma
 

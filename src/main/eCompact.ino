@@ -28,13 +28,27 @@ bool transitionCompactLift(){
 
 //-----< De Compactar a Alto >-----
 bool transitionCompactHalt(){
-    if (accon == releasecompactbutton) {
+    if (accion == releasecompactbutton) {
         // Soltar botón compactar
 
         /* ---------------------- */
         /* -  test  - */
         /*  ---------------------- */
         Serial.println("Accion: " + accion + " | hacia levantar");
+
+        return true;
+    }
+    return false;
+
+//-----< De Compactar a Stop >-----
+bool transitionCompactStop(){
+    if (accion == emergencystop) {
+        // Pulsar paro de emergencia
+
+        /* ---------------------- */
+        /* -  test  - */
+        /*  ---------------------- */
+        Serial.println("Accion: " + accion + " | hacia paro de emergencia");
 
         return true;
     }
