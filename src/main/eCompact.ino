@@ -39,6 +39,7 @@ bool transitionCompactHalt(){
         return true;
     }
     return false;
+}
 
 //-----< De Compactar a Stop >-----
 bool transitionCompactStop(){
