@@ -1,12 +1,31 @@
 //==================< Lift >=====================
 void stateLift(){
-    Serial.println("Levantar");
+
+        /* ---------------------- */
+        /* -  test  - */
+        /*  ---------------------- */
+        Serial.println("Levantar");
+        Serial.println("Accion 1: ");
+        while (Serial.available() == 0) {}
+        accion = Serial.readStringUntil('\n');
+        accion.trim();
+        Serial.println("Accion 2: ");
+        while (Serial.available() == 0) {}
+        accion2 = Serial.readStringUntil('\n');
+        accion2.trim();
+
 }
 
 //-----< De Levantar a Alto >-----
 bool transitionLiftHalt(){
-    if (false && false) {
+    if (accion == cylmid && accion2 == releaseliftbutton) {
         // carrera cilindro > 0 & soltar botón levantar
+
+        /* ---------------------- */
+        /* -  test  - */
+        /*  ---------------------- */
+        Serial.println("Accion: " + accion + " | hacia alto");
+
         return true;
     }
     return false;
@@ -14,8 +33,14 @@ bool transitionLiftHalt(){
 
 //-----< De Levantar a Inactivo >-----
 bool transitionLiftIdle(){
-    if (false) {
+    if (accion == cylbottom) {
         // carrera cilindro = 0
+
+        /* ---------------------- */
+        /* -  test  - */
+        /*  ---------------------- */
+        Serial.println("Accion: " + accion + " | hacia inactivo");
+
         return true;
     }
     return false;

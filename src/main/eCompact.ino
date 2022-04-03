@@ -4,7 +4,7 @@ void stateCompact(){
         /* ---------------------- */
         /* -  test  - */
         /*  ---------------------- */
-        Serial.println("Rellenar");
+        Serial.println("Compactar");
         while (Serial.available() == 0) {}
         accion = Serial.readStringUntil('\n');
         accion.trim();
