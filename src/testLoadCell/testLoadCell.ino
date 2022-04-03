@@ -24,8 +24,8 @@
 #endif
 
 //pins:
-const int HX711_dout = 4; //mcu > HX711 dout pin
-const int HX711_sck = 5; //mcu > HX711 sck pin
+const int HX711_dout = 2; //mcu > HX711 dout pin
+const int HX711_sck = 3; //mcu > HX711 sck pin
 
 //HX711 constructor:
 HX711_ADC LoadCell(HX711_dout, HX711_sck);
@@ -57,7 +57,7 @@ void setup() {
 
 void loop() {
   static boolean newDataReady = 0;
-  const int serialPrintInterval = 0; //increase value to slow down serial print activity
+  const int serialPrintInterval = 100; //increase value to slow down serial print activity
 
   // check for new data/start next conversion:
   if (LoadCell.update()) newDataReady = true;

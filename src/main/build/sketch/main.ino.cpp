@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#line 1 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
+#line 1 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/src/main/main.ino"
 /******************************************************************************
 * File:             main.ino
 *
@@ -60,59 +60,6 @@ StateMachine machine = StateMachine();
 /* StateMachine opMachine = StateMachine(); */
 
 // Definición de estados de la maquina, funciones definidas abajo
-#line 74 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-void setup();
-#line 115 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-void loop();
-#line 126 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-void state0();
-#line 132 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionS0Idle();
-#line 141 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-void stateIdle();
-#line 147 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionIdleFill();
-#line 156 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionIdleReset();
-#line 165 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-void stateFill();
-#line 170 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionFillExtract();
-#line 179 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionFillCompact();
-#line 188 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionFillLift();
-#line 197 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-void stateExtract();
-#line 202 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionExtractIdle();
-#line 211 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-void stateCompact();
-#line 216 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionCompactLift();
-#line 225 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionCompactHalt();
-#line 234 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-void stateLift();
-#line 239 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionLiftHalt();
-#line 248 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionLiftIdle();
-#line 257 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-void stateHalt();
-#line 262 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionHaltCompact();
-#line 271 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionHaltLift();
-#line 280 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-void stateReset();
-#line 285 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionResetS0();
-#line 291 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-void stateStop();
-#line 296 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
-bool transitionStopReset();
-#line 61 "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/main/main.ino"
 State* S0       = machine.addState(&state0);
 State* Idle     = machine.addState(&stateIdle);
 State* Fill     = machine.addState(&stateFill);
@@ -122,6 +69,9 @@ State* Lift     = machine.addState(&stateLift);
 State* Halt     = machine.addState(&stateHalt);
 State* Reset    = machine.addState(&stateReset);
 State* Stop     = machine.addState(&stateStop);
+
+// Debug
+String estado = "";
 
 /* ---------------------- */
 /* -  Setup inicial  - */
@@ -180,7 +130,14 @@ void loop() {
 //==================< S0 >=====================
 void state0(){
     Serial.println("State 0");
-    digitalWrite(TEST_LED, !digitalRead(TEST_LED));
+
+    /* ---------------------- */
+    /* -  test  - */
+    /*  ---------------------- */
+    Serial.println("Estado inicial: ");
+    while (Serial.available() == 0)
+    estado = Serial.readString();
+    /* digitalWrite(TEST_LED, !digitalRead(TEST_LED)); */
 }
 
 //-----< De S0 a Inactivo >-----
