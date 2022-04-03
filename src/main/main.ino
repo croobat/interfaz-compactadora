@@ -3,7 +3,7 @@
 *
 * Author:           Luis Antonio Ramírez García, Anel Madai Perales Avila
 * Created:          02/16/22
-* Description:      Código principal de la máquina de estados para la 
+* Description:      Código principal de la máquina de estados para la
 *                   compactadora de cartón
 *****************************************************************************/
 
@@ -36,7 +36,22 @@ State* Stop     = machine.addState(&stateStop);
 
 // Debug
 String accion = "";
-const char* onswitch = "onswitch";
+const char* onswitch = "switch encendido";
+const char* offswitch = "switch apagado";
+const char* opendoor = "abrir puerta";
+const char* closedoor = "cerrar puerta";
+const char* cylbottom = "cilindro en inicio";
+const char* cylmid = "cilindro en camino";
+const char* cyltop = "cilindro en limite";
+const char* kg20carton = "20 kg carton";
+const char* lesskg20cboard = "menos 20 kg carton";
+const char* pushcompactbutton = "presionar compactar";
+const char* releasecompactbutton = "soltar compactar";
+const char* pushliftbutton = "presionar levantar";
+const char* releaseliftbutton = "soltar levantar";
+const char* emergencystop = "paro de emergencia";
+
+
 
 /* ---------------------- */
 /* -  Setup inicial  - */
