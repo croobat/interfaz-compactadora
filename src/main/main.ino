@@ -61,8 +61,16 @@ const char* emergencystop = "paro de emergencia";
 void setup()
 {
     Serial.begin(115200);
+
+    /* ---------------------- */
+    /*     -  test  - */
+    /* ---------------------- */
     //pinMode(TEST_LED, OUTPUT); // test
     //randomSeed(A0); // test
+    delay(3000);
+    Serial.println("Introducir la accion como aparece en main - debug (switch encendido, soltar levantar...)");
+    Serial.println("Si se necesita más de una acción dar prioridad según aparezca (esto mientras testeamos)");
+    Serial.println("Más importante > Medio importante > Menos importante");
 
     /* ---------------------- */
     /* -  Transiciones  - */
