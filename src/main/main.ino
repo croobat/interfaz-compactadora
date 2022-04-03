@@ -47,9 +47,9 @@ const char* cylmid = "cilindro en camino";
 const char* cyltop = "cilindro en limite";
 const char* kg20carton = "20 kg carton";
 const char* lesskg20carton = "menos 20 kg carton";
-const char* pushcompactbutton = "presionar compactar";
+const char* pushcompactbutton = "pulsar compactar";
 const char* releasecompactbutton = "soltar compactar";
-const char* pushliftbutton = "presionar levantar";
+const char* pushliftbutton = "pulsar levantar";
 const char* releaseliftbutton = "soltar levantar";
 const char* emergencystop = "paro de emergencia";
 
