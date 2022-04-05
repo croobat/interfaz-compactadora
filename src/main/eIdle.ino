@@ -10,10 +10,13 @@ void stateIdle(){
         /* -  test  - */
         /*  ---------------------- */
         Serial.println("Inactivo");
-        while (Serial.available() == 0) {}
-        accion = Serial.readStringUntil('\n');
-        accion.trim();
+        /* while (Serial.available() == 0) {} */
+        /* accion = Serial.readStringUntil('\n'); */
+        /* accion.trim(); */
 
+    while (!onSwitch.isReleased()) {
+        onSwitch.loop(); // Switch de encendido
+    }
 }
 
 //-----< De Inactivo a Rellenar >-----
@@ -33,7 +36,7 @@ bool transitionIdleFill(){
 
 //-----< De Inactivo a Reiniciar >-----
 bool transitionIdleReset(){
-    if (accion == offswitch) {
+    if (!isSwitchOn()) {
         // Interruptor de apagado
 
         /* ---------------------- */

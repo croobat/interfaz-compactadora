@@ -5,16 +5,19 @@ void state0(){
         /* -  test  - */
         /*  ---------------------- */
         Serial.println("Inicial");
-        while (Serial.available() == 0) {}
-        accion = Serial.readStringUntil('\n');
-        accion.trim();
+        /* while (Serial.available() == 0) {} */
+        /* accion = Serial.readStringUntil('\n'); */
+        /* accion.trim(); */
 
+    while (!onSwitch.isPressed()) {
+        onSwitch.loop(); // Switch de encendido
+    }
 }
 
 //-----< De S0 a Inactivo >-----
 bool transitionS0Idle(){
     /* if (compareString("onswitch")) { */
-    if (accion == onswitch) {
+    if (isSwitchOn()) {
         // Interruptor de encendido
 
         /* ---------------------- */

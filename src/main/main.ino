@@ -11,6 +11,10 @@
 /* -  Librerias  - */
 /* ---------------------- */
 #include <StateMachine.h>
+#include <ezButton.h>
+
+// Conexiones
+ezButton onSwitch(2);
 
 // Delay en loop
 const int STATE_DELAY = 1000;
@@ -19,9 +23,6 @@ const int STATE_DELAY = 1000;
 
 // Maquina de estados principal
 StateMachine machine = StateMachine();
-
-// Maquina de estados secundaria (operando/no operando)
-/* StateMachine opMachine = StateMachine(); */
 
 // Definición de estados de la maquina, funciones definidas abajo
 State* S0       = machine.addState(&state0);
@@ -60,14 +61,15 @@ const char* emergencystop = "paro de emergencia";
 /* ---------------------- */
 void setup()
 {
-    Serial.begin(115200);
+    Serial.begin(9600);
+    onSwitch.setDebounceTime(50); // Antirebotes del switch de encendido
 
     /* ---------------------- */
     /*     -  test  - */
     /* ---------------------- */
     //pinMode(TEST_LED, OUTPUT); // test
     //randomSeed(A0); // test
-    delay(3000);
+    delay(0);
     Serial.println("Introducir la accion como aparece en main - debug (switch encendido, soltar levantar...)");
     Serial.println("Si se necesita más de una acción dar prioridad según aparezca (esto mientras testeamos)");
     Serial.println("Más importante > Medio importante > Menos importante");
@@ -111,9 +113,14 @@ void setup()
 /* -  Loop infinito  - */
 /* ---------------------- */
 void loop() {
+    onSwitch.loop(); // Switch de encendido
     machine.run();
     delay(STATE_DELAY);
 }
+
+/* ---------- */
+/* -  test  - */
+/* ---------- */
 
 bool compareString(String comp) {
   if (Serial.available()) {
