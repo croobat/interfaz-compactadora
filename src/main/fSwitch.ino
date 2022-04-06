@@ -10,3 +10,12 @@ bool isSwitchOn(){
         return true;
     }
 }
+
+// Revisar estado de la puerta
+bool isDoorOpen(){
+  if (doorState == 1) {
+    return true;
+  } else {
+    return false;
+  }
+}

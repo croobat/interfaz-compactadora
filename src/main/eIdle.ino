@@ -14,14 +14,17 @@ void stateIdle(){
         /* accion = Serial.readStringUntil('\n'); */
         /* accion.trim(); */
 
-    while (!onSwitch.isReleased()) {
+    while (doorState == 1) {delay(10);}
+
+    while (!onSwitch.isReleased() && doorState == 0) {
         onSwitch.loop(); // Switch de encendido
+        doorState = digitalRead(doorSwitch); // Switch de puerta
     }
 }
 
 //-----< De Inactivo a Rellenar >-----
 bool transitionIdleFill(){
-    if (accion == opendoor) {
+    if (isDoorOpen()) {
         // Sensor magnético abierto
 
         /* ---------------------- */

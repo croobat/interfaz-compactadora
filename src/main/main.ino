@@ -15,7 +15,12 @@
 
 // Conexiones
 ezButton onSwitch(2);
+const int doorSwitch = 23;
 
+/* --------------- */
+/* -  Variables  - */
+/* --------------- */
+int doorState;
 // Delay en loop
 const int STATE_DELAY = 1000;
 //int randomState = 0; // test
@@ -63,6 +68,7 @@ void setup()
 {
     Serial.begin(9600);
     onSwitch.setDebounceTime(50); // Antirebotes del switch de encendido
+    pinMode(doorSwitch, INPUT_PULLUP); // Pin de puerta en modo input pullup
 
     /* ---------------------- */
     /*     -  test  - */

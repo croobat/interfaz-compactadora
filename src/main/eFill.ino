@@ -5,7 +5,7 @@ void stateFill(){
         /* -  test  - */
         /*  ---------------------- */
         Serial.println("Rellenar");
-        Serial.println("Accion 1 (cartón > puerta > botón): ");
+        Serial.println("Accion 1 (cartón > botón): ");
         while (Serial.available() == 0) {}
         accion = Serial.readStringUntil('\n');
         accion.trim();
@@ -13,16 +13,12 @@ void stateFill(){
         while (Serial.available() == 0) {}
         accion2 = Serial.readStringUntil('\n');
         accion2.trim();
-        Serial.println("Accion 3: ");
-        while (Serial.available() == 0) {}
-        accion3 = Serial.readStringUntil('\n');
-        accion3.trim();
 
 }
 
 //-----< De Rellenar a Compactar >-----
 bool transitionFillCompact(){
-    if (accion == lesskg20carton && accion2 == closedoor && accion3 == pushcompactbutton) {
+    if (accion == lesskg20carton && !isDoorOpen() && accion2 == pushcompactbutton) {
         // Peso < 20 kg & cerrar puerta & pulsar botón compactar
 
         /* ---------------------- */
@@ -37,7 +33,7 @@ bool transitionFillCompact(){
 
 //-----< De Rellenar a Levantar >-----
 bool transitionFillLift(){
-     if (accion == lesskg20carton && accion2 == closedoor && accion3 == pushliftbutton) {
+     if (accion == lesskg20carton && !isDoorOpen() && accion2 == pushliftbutton) {
         // Peso < 20 kg & cerrar puerta & pulsar botón levantar
 
         /* ---------------------- */
@@ -52,7 +48,7 @@ bool transitionFillLift(){
 
 //-----< De Rellenar a Extraer >-----
 bool transitionFillExtract(){
-    if (accion == kg20carton && accion2 == opendoor) {
+    if (accion == kg20carton && isDoorOpen()) {
         // Peso >= 20 kg & abrir puerta
 
         /* ---------------------- */
