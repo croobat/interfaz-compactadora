@@ -5,20 +5,26 @@ void stateLift(){
         /* -  test  - */
         /*  ---------------------- */
         Serial.println("Levantar");
-        Serial.println("Accion 1 (cilindro, boton, paro emergencia): ");
+        Serial.println("Accion 1 (cilindro): ");
         while (Serial.available() == 0) {}
         accion = Serial.readStringUntil('\n');
         accion.trim();
-        Serial.println("Accion 2: ");
-        while (Serial.available() == 0) {}
-        accion2 = Serial.readStringUntil('\n');
-        accion2.trim();
+        /* Serial.println("Accion 2: "); */
+        /* while (Serial.available() == 0) {} */
+        /* accion2 = Serial.readStringUntil('\n'); */
+        /* accion2.trim(); */
 
+     do {
+        liftButton.loop();
+        emergencyButton.loop();
+        liftButtonState = liftButton.getState(); // Actualizar estado botón levantar
+        emergencyButtonState = emergencyButton.getState(); // Actualizar estado boton emergencia
+    } while (isCompactPressed() && !isLiftPressed() && !isEmergencyPressed());
 }
 
 //-----< De Levantar a Alto >-----
 bool transitionLiftHalt(){
-    if (accion == cylmid && accion2 == releaseliftbutton) {
+    if (accion == cylmid && !isLiftPressed()) {
         // carrera cilindro > 0 & soltar botón levantar
 
         /* ---------------------- */
@@ -48,7 +54,7 @@ bool transitionLiftIdle(){
 
 //-----< De Levantar a Stop >-----
 bool transitionLiftStop(){
-    if (accion == emergencystop) {
+    if (isEmergencyPressed()) {
         // Pulsar paro de emergencia
 
         /* ---------------------- */

@@ -5,15 +5,24 @@ void stateHalt(){
         /* -  test  - */
         /*  ---------------------- */
         Serial.println("Alto");
-        while (Serial.available() == 0) {}
-        accion = Serial.readStringUntil('\n');
-        accion.trim();
+        /* while (Serial.available() == 0) {} */
+        /* accion = Serial.readStringUntil('\n'); */
+        /* accion.trim(); */
+
+     do {
+        compactButton.loop();
+        liftButton.loop();
+        emergencyButton.loop();
+        compactButtonState = compactButton.getState(); // Actualizar estado boton compactar
+        liftButtonState = liftButton.getState(); // Actualizar estado botón levantar
+        emergencyButtonState = emergencyButton.getState(); // Actualizar estado boton emergency
+    } while (!isCompactPressed() && !isLiftPressed() && !isEmergencyPressed());
 
 }
 
 //-----< De Alto a Compactar >-----
 bool transitionHaltCompact(){
-    if (accion == pushcompactbutton) {
+    if (isCompactPressed()) {
         // Pulsar botón compactar
 
         /* ---------------------- */
@@ -27,7 +36,7 @@ bool transitionHaltCompact(){
 
 //-----< De Alto a Levantar >-----
 bool transitionHaltLift(){
-    if (accion == pushliftbutton) {
+    if (isLiftPressed()) {
         // Pulsar botón levantar
 
         /* ---------------------- */
@@ -41,7 +50,7 @@ bool transitionHaltLift(){
 
 //-----< De Alto a Stop >-----
 bool transitionHaltStop(){
-    if (accion == emergencystop) {
+    if (isEmergencyPressed()) {
         // Pulsar paro de emergencia
 
         /* ---------------------- */

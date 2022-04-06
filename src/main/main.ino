@@ -16,13 +16,20 @@
 // Conexiones
 ezButton onSwitch(2);
 const int doorSwitch = 23;
+ezButton compactButton(39);
+ezButton liftButton(37);
+ezButton emergencyButton(35);
 
 /* --------------- */
 /* -  Variables  - */
 /* --------------- */
 int doorState;
+int compactButtonState;
+int liftButtonState;
+int emergencyButtonState;
+
 // Delay en loop
-const int STATE_DELAY = 1000;
+const int STATE_DELAY = 500;
 //int randomState = 0; // test
 //const int TEST_LED = 13;
 
@@ -44,20 +51,20 @@ State* Stop     = machine.addState(&stateStop);
 String accion = "";
 String accion2 = "";
 String accion3 = "";
-const char* onswitch = "switch encendido";
-const char* offswitch = "switch apagado";
-const char* opendoor = "abrir puerta";
-const char* closedoor = "cerrar puerta";
-const char* cylbottom = "cilindro en inicio";
-const char* cylmid = "cilindro en camino";
-const char* cyltop = "cilindro en limite";
-const char* kg20carton = "20 kg carton";
-const char* lesskg20carton = "menos 20 kg carton";
-const char* pushcompactbutton = "pulsar compactar";
-const char* releasecompactbutton = "soltar compactar";
-const char* pushliftbutton = "pulsar levantar";
-const char* releaseliftbutton = "soltar levantar";
-const char* emergencystop = "paro de emergencia";
+/* const char* onswitch = "switch encendido"; */
+/* const char* offswitch = "switch apagado"; */
+/* const char* opendoor = "abrir puerta"; */
+/* const char* closedoor = "cerrar puerta"; */
+const char* cylbottom = "lim";
+const char* cylmid = "mid";
+/* const char* cyltop = "cilindro en limite"; */
+const char* kg20carton = "mas";
+const char* lesskg20carton = "menos";
+/* const char* pushcompactbutton = "pulsar compactar"; */
+/* const char* releasecompactbutton = "soltar compactar"; */
+/* const char* pushliftbutton = "pulsar levantar"; */
+/* const char* releaseliftbutton = "soltar levantar"; */
+/* const char* emergencystop = "paro de emergencia"; */
 
 
 
@@ -67,18 +74,29 @@ const char* emergencystop = "paro de emergencia";
 void setup()
 {
     Serial.begin(9600);
-    onSwitch.setDebounceTime(50); // Antirebotes del switch de encendido
+
+    // Pinmodes
     pinMode(doorSwitch, INPUT_PULLUP); // Pin de puerta en modo input pullup
+
+    // Asignando antirrebotes de los botones y switches (count falling)
+    onSwitch.setDebounceTime(50);
+    compactButton.setDebounceTime(50);
+    liftButton.setDebounceTime(50);
+    emergencyButton.setDebounceTime(50);
+    compactButton.setCountMode(COUNT_FALLING);
+    liftButton.setCountMode(COUNT_FALLING);
+    emergencyButton.setCountMode(COUNT_FALLING);
 
     /* ---------------------- */
     /*     -  test  - */
     /* ---------------------- */
     //pinMode(TEST_LED, OUTPUT); // test
     //randomSeed(A0); // test
-    delay(0);
-    Serial.println("Introducir la accion como aparece en main - debug (switch encendido, soltar levantar...)");
-    Serial.println("Si se necesita más de una acción dar prioridad según aparezca (esto mientras testeamos)");
-    Serial.println("Más importante > Medio importante > Menos importante");
+    /* delay(0); */
+    /* Serial.println("Introducir la accion como aparece en main - debug (switch encendido, soltar levantar...)"); */
+    /* Serial.println("Si se necesita más de una acción dar prioridad según aparezca (esto mientras testeamos)"); */
+    /* Serial.println("Más importante > Medio importante > Menos importante"); */
+    Serial.println("Iniciando maquina");
 
     /* ---------------------- */
     /* -  Transiciones  - */
@@ -119,8 +137,16 @@ void setup()
 /* -  Loop infinito  - */
 /* ---------------------- */
 void loop() {
-    onSwitch.loop(); // Switch de encendido
+    // Llamando loops de botones y switches
+    onSwitch.loop();
+    compactButton.loop();
+    liftButton.loop();
+    emergencyButton.loop();
+
+    // Iniciando maquina de estados
     machine.run();
+
+    // Retraso del sistema
     delay(STATE_DELAY);
 }
 

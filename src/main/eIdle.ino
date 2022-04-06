@@ -16,7 +16,7 @@ void stateIdle(){
 
     while (doorState == 1) {delay(10);}
 
-    while (!onSwitch.isReleased() && doorState == 0) {
+    while (!onSwitch.isReleased() && !isDoorOpen()) {
         onSwitch.loop(); // Switch de encendido
         doorState = digitalRead(doorSwitch); // Switch de puerta
     }
