@@ -10,6 +10,8 @@ void stateCompact(){
         /* accion.trim(); */
 
      do {
+        operando();
+
         compactButton.loop();
         liftButton.loop();
         emergencyButton.loop();

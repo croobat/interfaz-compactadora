@@ -1,6 +1,7 @@
 //==================< Fill >=====================
 void stateFill(){
 
+
         /* ---------------------- */
         /* -  test  - */
         /*  ---------------------- */
@@ -17,6 +18,11 @@ void stateFill(){
         /* accion2.trim(); */
 
      do {
+        /* OPState = false; */
+        /* speakerOFF(); */
+        noOperando();
+
+
         compactButton.loop();
         liftButton.loop();
         doorState = digitalRead(doorSwitch); // Switch de puerta

@@ -2,11 +2,9 @@
 bool isSwitchOn(){
     int state = onSwitch.getState();
     if (state == HIGH) {
-        Serial.println("off");
         return false;
     }
     else {
-        Serial.println("on");
         return true;
     }
 }
@@ -45,4 +43,39 @@ bool isEmergencyPressed(){
   } else {
     return false;
   }
+}
+
+// Encender bocina
+void speakerON(){
+        for(speakerFreq=400; speakerFreq<500; speakerFreq++){
+            tone(speaker,speakerFreq);
+            delay(5);
+        }
+        for(speakerFreq=500; speakerFreq>400; speakerFreq--){
+            tone(speaker,speakerFreq);
+            delay(5);
+    }
+}
+
+// Apagar bocina
+void speakerOFF(){
+    noTone(speaker);
+}
+
+void operando(){
+    digitalWrite(redLED, HIGH);
+    digitalWrite(greenLED, LOW);
+    speakerON();
+}
+
+void noOperando(){
+    digitalWrite(redLED, LOW);
+    digitalWrite(greenLED, HIGH);
+    speakerOFF();
+}
+
+void reiniciar(){
+    digitalWrite(redLED, LOW);
+    digitalWrite(greenLED, LOW);
+    speakerOFF();
 }

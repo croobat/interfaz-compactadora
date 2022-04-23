@@ -10,6 +10,8 @@ void stateHalt(){
         /* accion.trim(); */
 
      do {
+        operando();
+
         compactButton.loop();
         liftButton.loop();
         emergencyButton.loop();

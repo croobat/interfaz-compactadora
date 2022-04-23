@@ -1,6 +1,7 @@
 //==================< Extract >=====================
 void stateExtract(){
 
+
         /* ---------------------- */
         /* -  test  - */
         /*  ---------------------- */
@@ -9,9 +10,13 @@ void stateExtract(){
         /* accion = Serial.readStringUntil('\n'); */
         /* accion.trim(); */
 
-    while (doorState == 1) {
+    do {
+        /* OPState = true; */
+        /* speakerON(); */
+        noOperando();
+
         doorState = digitalRead(doorSwitch); // Switch de puerta
-    }
+    } while (doorState == 1);
 }
 
 //-----< De Extraer a Inactivo >-----

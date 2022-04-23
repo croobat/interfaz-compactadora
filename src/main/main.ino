@@ -46,6 +46,9 @@
 // Conexiones
 ezButton onSwitch(2);
 const int doorSwitch = 23;
+const int speaker = 9;
+const int redLED = 42;
+const int greenLED = 46;
 ezButton compactButton(39);
 ezButton liftButton(37);
 ezButton emergencyButton(35);
@@ -57,6 +60,8 @@ int doorState;
 int compactButtonState;
 int liftButtonState;
 int emergencyButtonState;
+int speakerFreq;
+/* bool OPState = false; */
 
 // Delay en loop
 const int STATE_DELAY = 500;
@@ -107,6 +112,9 @@ void setup()
 
     // Pinmodes
     pinMode(doorSwitch, INPUT_PULLUP); // Pin de puerta en modo input pullup
+    pinMode(speaker, OUTPUT); // Pin de bocina en modo salida
+    pinMode(redLED, OUTPUT);
+    pinMode(greenLED, OUTPUT);
 
     // Asignando antirrebotes de los botones y switches (count falling)
     onSwitch.setDebounceTime(50);

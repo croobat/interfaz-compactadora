@@ -1,5 +1,3 @@
-#include <StateMachine.h>
-
 const int BUTTON = 2;
 const int LED = 3;
 int BUTTONstate = 0;
@@ -18,8 +16,4 @@ void loop() {
   else{
     digitalWrite(LED, LOW);
   }
-}
-
-void fsm() {
-
 }

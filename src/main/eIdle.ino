@@ -16,10 +16,14 @@ void stateIdle(){
 
     while (doorState == 1) {delay(10);}
 
-    while (!onSwitch.isReleased() && !isDoorOpen()) {
+    do {
+        /* OPState = false; */
+        /* speakerOFF(); */
+        noOperando();
+
         onSwitch.loop(); // Switch de encendido
         doorState = digitalRead(doorSwitch); // Switch de puerta
-    }
+    } while (!onSwitch.isReleased() && !isDoorOpen());
 }
 
 //-----< De Inactivo a Rellenar >-----

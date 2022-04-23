@@ -15,6 +15,8 @@ void stateLift(){
         /* accion2.trim(); */
 
      do {
+        operando();
+
         liftButton.loop();
         emergencyButton.loop();
         liftButtonState = liftButton.getState(); // Actualizar estado botón levantar
