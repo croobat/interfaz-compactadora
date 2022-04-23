@@ -15,3 +15,6 @@ https://github.com/itead/ITEADLIB_Arduino_Nextion/archive/master.zip
 
 ezButton - Arduino Button library
 https://github.com/ArduinoGetStarted/button
+
+ITEADLIB_Arduino_Nextion - Nextion Touch Display Library
+https://github.com/itead/ITEADLIB_Arduino_Nextion/archive/master.zip
