@@ -49,9 +49,9 @@ const int doorSwitch = 23;
 const int speaker = 9;
 const int redLED = 42;
 const int greenLED = 46;
-ezButton compactButton(39);
-ezButton liftButton(37);
-ezButton emergencyButton(35);
+ezButton compactButton(37);
+ezButton liftButton(35);
+ezButton emergencyButton(33);
 
 /* --------------- */
 /* -  Variables  - */
