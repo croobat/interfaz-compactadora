@@ -1,0 +1,126 @@
+*Pick And Place List
+*Company=
+*Author=
+*eMail=
+*
+*Project=PCB_compactadora
+*Date=13:53:56
+*CreatedBy=Fritzing 0.9.9b.2021-09-22.0.9.6-35-gf0af53a9
+*
+*
+*Coordinates in mm, always center of component
+*Origin 0/0=Lower left corner of PCB
+*Rotation in degree (0-360, math. pos.)
+*
+*No;Value;Package;X;Y;Rotation;Side;Name
+1;;;86.3727;-7.9047;0;Bottom;Copper Fill67
+2;;;115.621;-48.1002;0;Bottom;Copper Fill49
+3;;;115.621;-70.9602;0;Bottom;Copper Fill4
+4;;;115.621;-35.4002;0;Bottom;Copper Fill54
+5;;;115.621;-37.9402;0;Bottom;Copper Fill17
+6;;;126.578;-32.0235;0;Bottom;Via10
+7;;;115.621;-58.2602;0;Bottom;Copper Fill9
+8;;;115.621;-73.5002;0;Bottom;Copper Fill39
+9;;;74.9808;-55.009;0;Bottom;Copper Fill20
+10;;;115.621;-68.4202;0;Bottom;Copper Fill41
+11;;DIP (Dual Inline) [THT];34.341;-11.2811;0;Bottom;RelevadorRLED
+12;;;71.1454;-7.9047;0;Bottom;Copper Fill66
+13;;;71.171;-87.4811;0;Bottom;Via14
+14;;;139.7;-86.632;0;Bottom;Copper Fill23
+15;;;115.621;-73.5002;0;Bottom;Copper Fill2
+16;;SIP (Single Inline) [THT];129.591;-10.0111;0;Bottom;Compact button
+17;;;121.295;-68.6553;0;Bottom;Via1
+18;;;113.436;-31.6156;0;Bottom;Copper Fill71
+19;;;132.131;-67.1611;0;Bottom;Via16
+20;;;60.9854;-27.4246;0;Bottom;Copper Fill74
+21;;;115.621;-60.8002;0;Bottom;Copper Fill44
+22;;;63.5254;-25.7228;0;Bottom;Copper Fill77
+23;;;137.16;-7.9047;0;Bottom;Copper Fill62
+24;;;115.621;-32.8602;0;Bottom;Copper Fill55
+25;;;74.9808;-55.009;0;Bottom;Copper Fill56
+26;;;121.295;-62.5593;0;Bottom;Via3
+27;;;117.678;-31.6156;0;Bottom;Copper Fill32
+28;;;115.621;-53.1802;0;Bottom;Copper Fill11
+29;;;111.773;-86.632;0;Bottom;Copper Fill28
+30;;SIP (Single Inline) [THT];38.151;-90.0211;0;Bottom;Load Amp 2
+31;;SIP (Single Inline) [THT];101.651;-88.7511;0;Bottom;ON/OFF Switch
+32;;;121.511;-72.6774;0;Bottom;Via17
+33;;;63.5254;-27.4246;0;Bottom;Copper Fill37
+34;;SIP (Single Inline) [THT];58.471;-90.0211;0;Bottom;Load Amp 1
+35;;SIP (Single Inline) [THT];111.811;-88.7511;0;Bottom;Speaker
+36;;;43.231;-39.2211;0;Bottom;Via12
+37;;;115.621;-68.4202;0;Bottom;Copper Fill5
+38;;;115.621;-58.2602;0;Bottom;Copper Fill45
+39;;;137.16;-7.9047;0;Bottom;Copper Fill25
+40;;;115.621;-63.3402;0;Bottom;Copper Fill43
+41;;;115.621;-65.8802;0;Bottom;Copper Fill42
+42;;;115.621;-35.4002;0;Bottom;Copper Fill18
+43;;;139.7;-86.632;0;Bottom;Copper Fill60
+44;;;115.621;-40.4802;0;Bottom;Copper Fill52
+45;;;114.3;-30.8028;0;Bottom;Copper Fill70
+46;;;46.7614;-75.6846;0;Bottom;Copper Fill33
+47;;;115.621;-70.9602;0;Bottom;Copper Fill40
+48;;;129.54;-7.9047;0;Bottom;Copper Fill61
+49;;;109.271;-64.6211;0;Bottom;Via2
+50;;SIP (Single Inline) [THT];71.171;-10.0111;0;Bottom;Red LED
+51;;;115.621;-50.6402;0;Bottom;Copper Fill12
+52;;;115.621;-37.9402;0;Bottom;Copper Fill53
+53;;;60.9854;-25.7228;0;Bottom;Copper Fill75
+54;;;60.9854;-25.7228;0;Bottom;Copper Fill36
+55;;;114.313;-7.9047;0;Bottom;Copper Fill63
+56;;;139.7;-57.93;0;Bottom;Copper Fill59
+57;;;116.84;-30.8028;0;Bottom;Copper Fill68
+58;;;83.8711;-44.301;0;Bottom;Via9
+59;;;63.5254;-25.7228;0;Bottom;Copper Fill38
+60;;;46.7614;-73.9828;0;Bottom;Copper Fill73
+61;;;115.621;-32.8602;0;Bottom;Copper Fill19
+62;;;119.202;-73.5764;0;Bottom;Copper Fill3
+63;;;74.0156;-89.0704;0;Bottom;Copper Fill1
+64;;;58.4454;-84.092;0;Bottom;Copper Fill57
+65;;;60.9854;-27.4246;0;Bottom;Copper Fill35
+66;;SIP (Single Inline) [THT];139.751;-53.1911;0;Bottom;Pantalla tactil
+67;;;115.621;-40.4802;0;Bottom;Copper Fill16
+68;;;121.971;-57.0011;0;Bottom;Via5
+69;;THT;16.3809;-95.1013;0;Bottom;Load cell
+70;;;115.621;-43.0202;0;Bottom;Copper Fill15
+71;;;116.84;-30.8028;0;Bottom;Copper Fill31
+72;;;46.7614;-73.9828;0;Bottom;Copper Fill34
+73;;;46.7614;-75.6846;0;Bottom;Copper Fill72
+74;;SIP (Single Inline) [THT];137.211;-10.0111;0;Bottom;Lift Button
+75;;SIP (Single Inline) [THT];12.751;-46.8411;0;Bottom;Electroválvula
+76;;;101.613;-86.632;0;Bottom;Copper Fill27
+77;;;86.3727;-7.9047;0;Bottom;Copper Fill30
+78;;;12.7381;-43.452;0;Bottom;Copper Fill22
+79;;;115.621;-45.5602;0;Bottom;Copper Fill14
+80;;;121.525;-49.9006;0;Bottom;Via13
+81;;DIP (Dual Inline) [THT];11.481;-34.1411;0;Bottom;RelevadorR
+82;;SIP (Single Inline) [THT];86.411;-10.0111;0;Bottom;Green LED
+83;;;111.773;-86.632;0;Bottom;Copper Fill65
+84;;;115.621;-60.8002;0;Bottom;Copper Fill8
+85;;;115.621;-63.3402;0;Bottom;Copper Fill7
+86;;;117.678;-31.6156;0;Bottom;Copper Fill69
+87;;;58.4454;-84.092;0;Bottom;Copper Fill21
+88;;;101.613;-86.632;0;Bottom;Copper Fill64
+89;;DIP (Dual Inline) [THT];11.481;-59.5411;0;Bottom;RelevadorL
+90;;;115.621;-55.7202;0;Bottom;Copper Fill46
+91;;;115.621;-43.0202;0;Bottom;Copper Fill51
+92;;SIP (Single Inline) [THT];114.351;-10.0111;0;Bottom;Emergency button
+93;;;12.7381;-43.452;0;Bottom;Copper Fill58
+94;;;115.621;-53.1802;0;Bottom;Copper Fill47
+95;;;63.5254;-27.4246;0;Bottom;Copper Fill76
+96;;;111.811;-18.901;0;Bottom;Via7
+97;;;115.621;-50.6402;0;Bottom;Copper Fill48
+98;;;129.54;-7.9047;0;Bottom;Copper Fill24
+99;;;115.621;-55.7202;0;Bottom;Copper Fill10
+100;;;127.051;-59.5411;0;Bottom;Via6
+101;;;71.2133;-50.6511;0;Bottom;Arduino MEGA
+102;;;115.621;-65.8802;0;Bottom;Copper Fill6
+103;;DIP (Dual Inline) [THT];54.661;-11.2811;0;Bottom;RelevadorGLED
+104;;;71.1454;-7.9047;0;Bottom;Copper Fill29
+105;;;115.621;-45.5602;0;Bottom;Copper Fill50
+106;;;127.051;-77.3211;0;Bottom;Via20
+107;;;58.1965;-51.1265;0;Bottom;Via11
+108;;;132.131;-57.0011;0;Bottom;Via15
+109;;;115.621;-48.1002;0;Bottom;Copper Fill13
+110;;SIP (Single Inline) [THT];139.751;-88.7511;0;Bottom;Switch magnetico
+111;;;114.313;-7.9047;0;Bottom;Copper Fill26
