@@ -11,6 +11,10 @@ void stateCompact(){
 
      do {
         operando();
+        vaciarDiagramaEstados();
+        sbCompact.Set_background_crop_picc(4);
+        tEstado.setText("Compactando");
+        actualizarReloj();
 
         compactButton.loop();
         liftButton.loop();
@@ -18,6 +22,9 @@ void stateCompact(){
         emergencyButtonState = emergencyButton.getState(); // Actualizar estado boton compactar
         compactButtonState = compactButton.getState(); // Actualizar estado boton compactar
         liftButtonState = liftButton.getState(); // Actualizar estado botón levantar
+
+        digitalWrite(relay_L, HIGH);
+        
     } while (isCompactPressed() && !isLiftPressed() && !isEmergencyPressed());
 }
 
@@ -30,6 +37,8 @@ bool transitionCompactLift(){
         /* -  test  - */
         /*  ---------------------- */
         Serial.println("Accion: " + accion + " | hacia levantar");
+        
+        digitalWrite(relay_L, LOW);
 
         return true;
     }
@@ -45,6 +54,8 @@ bool transitionCompactHalt(){
         /* -  test  - */
         /*  ---------------------- */
         Serial.println("Accion: " + accion + " | hacia alto");
+        
+        digitalWrite(relay_L, LOW);
 
         return true;
     }
@@ -60,9 +71,10 @@ bool transitionCompactStop(){
         /* -  test  - */
         /*  ---------------------- */
         Serial.println("Accion: " + accion + " | hacia paro de emergencia");
+        
+        digitalWrite(relay_L, LOW);
 
         return true;
     }
     return false;
 }
-

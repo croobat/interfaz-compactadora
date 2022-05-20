@@ -14,6 +14,10 @@ void stateExtract(){
         /* OPState = true; */
         /* speakerON(); */
         noOperando();
+        vaciarDiagramaEstados();
+        sbExtract.Set_background_crop_picc(4);
+        tEstado.setText("Extrayendo bloque");
+        actualizarReloj();
 
         doorState = digitalRead(doorSwitch); // Switch de puerta
     } while (doorState == 1);
@@ -33,4 +37,3 @@ bool transitionExtractIdle(){
     }
     return false;
 }
-

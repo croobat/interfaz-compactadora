@@ -18,10 +18,14 @@ void stateFill(){
         /* accion2.trim(); */
 
      do {
+        actualizarPeso();
         /* OPState = false; */
         /* speakerOFF(); */
         noOperando();
-
+       vaciarDiagramaEstados();
+        sbFill.Set_background_crop_picc(4);
+        tEstado.setText("Rellenando");
+        actualizarReloj();
 
         compactButton.loop();
         liftButton.loop();
@@ -34,7 +38,8 @@ void stateFill(){
 
 //-----< De Rellenar a Compactar >-----
 bool transitionFillCompact(){
-    if (accion == lesskg20carton && !isDoorOpen() && isCompactPressed()) {
+    //if (accion == lesskg20carton && !isDoorOpen() && isCompactPressed()) {
+    if (weight < MIN_WEIGHT && !isDoorOpen() && isCompactPressed()) {
         // Peso < 20 kg & cerrar puerta & pulsar botón compactar
 
         /* ---------------------- */
@@ -49,7 +54,7 @@ bool transitionFillCompact(){
 
 //-----< De Rellenar a Levantar >-----
 bool transitionFillLift(){
-     if (accion == lesskg20carton && !isDoorOpen() && isLiftPressed()) {
+     if (weight < MIN_WEIGHT && !isDoorOpen() && isLiftPressed()) {
         // Peso < 20 kg & cerrar puerta & pulsar botón levantar
 
         /* ---------------------- */
@@ -64,7 +69,7 @@ bool transitionFillLift(){
 
 //-----< De Rellenar a Extraer >-----
 bool transitionFillExtract(){
-    if (accion == kg20carton && isDoorOpen()) {
+    if (weight >= MIN_WEIGHT && isDoorOpen()) {
         // Peso >= 20 kg & abrir puerta
 
         /* ---------------------- */
@@ -76,4 +81,3 @@ bool transitionFillExtract(){
     }
     return false;
 }
-

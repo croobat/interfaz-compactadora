@@ -10,6 +10,11 @@ void state0(){
         /* accion.trim(); */
 
     while (!onSwitch.isPressed()) {
+        vaciarDiagramaEstados();
+        sbS0.Set_background_crop_picc(4);
+        tEstado.setText("Inicial");
+        actualizarReloj();
+        
         onSwitch.loop(); // Switch de encendido
     }
 }
@@ -29,4 +34,3 @@ bool transitionS0Idle(){
     }
     return false;
 }
-

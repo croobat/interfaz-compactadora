@@ -11,6 +11,10 @@ void stateHalt(){
 
      do {
         operando();
+        vaciarDiagramaEstados();
+        sbHalt.Set_background_crop_picc(4);
+        tEstado.setText("Alto");
+        actualizarReloj();
 
         compactButton.loop();
         liftButton.loop();

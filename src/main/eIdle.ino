@@ -1,11 +1,6 @@
 //==================< Idle >=====================
 void stateIdle(){
 
-    /* ---------------------- */
-    /* -  Actualizar peso  - */
-    /* ---------------------- */
-
-
         /* ---------------------- */
         /* -  test  - */
         /*  ---------------------- */
@@ -17,9 +12,15 @@ void stateIdle(){
     while (doorState == 1) {delay(10);}
 
     do {
+        actualizarPeso();
+        actualizarReloj();
+
         /* OPState = false; */
         /* speakerOFF(); */
         noOperando();
+       vaciarDiagramaEstados();
+       sbIdle.Set_background_crop_picc(4);
+       tEstado.setText("Inactivo");
 
         onSwitch.loop(); // Switch de encendido
         doorState = digitalRead(doorSwitch); // Switch de puerta
@@ -55,4 +56,3 @@ bool transitionIdleReset(){
     }
     return false;
 }
-

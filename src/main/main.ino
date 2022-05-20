@@ -10,48 +10,85 @@
 /* ---------------------- */
 /* -  Librerias  - */
 /* ---------------------- */
+#include <math.h>
 //State Machine library
 #include <StateMachine.h>
 // Multibutton helper library
 #include <ezButton.h>
-//// Nextion Libraries
-//#include <NexNumber.h>
-//#include <doxygen.h>
-//#include <NexButton.h>
-//#include <NexCheckbox.h>
-//#include <NexConfig.h>
-//#include <NexCrop.h>
-//#include <NexDualStateButton.h>
-//#include <NexGauge.h>
-//#include <NexGpio.h>
-//#include <NexHardware.h>
-//#include <NexHotspot.h>
-//#include <NexObject.h>
-//#include <NexPage.h>
-//#include <NexPicture.h>
-//#include <NexProgressBar.h>
-//#include <NexRadio.h>
-//#include <NexRtc.h>
-//#include <NexScrolltext.h>
-//#include <NexSlider.h>
-//#include <NexText.h>
-//#include <NexTimer.h>
-//#include <Nextion.h>
-//#include <NexTouch.h>
-//#include <NexUpload.h>
-//#include <NexVariable.h>
-//#include <NexWaveform.h>
+// HX711 load cell amplifier library
+#include <HX711_ADC.h>
+// EEPROM
+#if defined(ESP8266)|| defined(ESP32) || defined(AVR)
+#include <EEPROM.h>
+#endif
+// Nextion Libraries
+#include <doxygen.h>
+#include <NexButton.h>
+#include <NexCheckbox.h>
+#include <NexConfig.h>
+#include <NexCrop.h>
+#include <NexDualStateButton.h>
+#include <NexGauge.h>
+#include <NexGpio.h>
+#include <NexHardware.h>
+#include <NexHotspot.h>
+#include <NexNumber.h>
+#include <NexObject.h>
+#include <NexPage.h>
+#include <NexPicture.h>
+#include <NexProgressBar.h>
+#include <NexRadio.h>
+#include <NexRtc.h>
+#include <NexScrolltext.h>
+#include <NexSlider.h>
+#include <NexText.h>
+#include <NexTimer.h>
+#include <Nextion.h>
+#include <NexTouch.h>
+#include <NexUpload.h>
+#include <NexVariable.h>
+#include <NexWaveform.h>
 
-
-// Conexiones
+/* --------------- */
+/* -  Hardware objects  - */
+/* --------------- */
 ezButton onSwitch(2);
 const int doorSwitch = 23;
 const int speaker = 9;
-const int redLED = 42;
-const int greenLED = 46;
+//const int redLED = 42;
+//const int greenLED = 46;
+const int relay_RedLED = 46;
+const int relay_GreenLED = 42;
+const int relay_L = 28;
+const int relay_R = 29;
 ezButton compactButton(37);
 ezButton liftButton(35);
 ezButton emergencyButton(33);
+const int HX711_dout = 4;
+const int HX711_sck = 5;
+
+/* --------------- */
+/* -  Software objects  - */
+/* --------------- */
+// Main page
+NexButton bOff = NexButton(0, 8, "bApagar");
+NexButton bReset = NexButton(0, 9, "bReiniciar");
+NexText tWeight = NexText (0, 11, "tPeso");
+NexText tEstado = NexText (0, 12, "tEstado");
+NexText tRuntime = NexText (0, 13, "tRuntime");
+NexText tCycles = NexText(0, 14, "tCiclos");
+NexProgressBar jProgress = NexProgressBar(0, 15, "jProgress");
+
+// State machine page
+NexButton sbS0 = NexButton(1, 3, "S0");
+NexButton sbIdle = NexButton(1, 4, "Idle");
+NexButton sbFill = NexButton(1, 5, "Fill");
+NexButton sbExtract = NexButton(1, 6, "Extract");
+NexButton sbCompact = NexButton(1, 7, "Compact");
+NexButton sbLift = NexButton(1, 8, "LIft");
+NexButton sbHalt = NexButton(1, 9, "Halt");
+NexButton sbStop = NexButton(1, 10, "Stop");
+NexButton sbReset = NexButton(1, 11, "Reset");
 
 /* --------------- */
 /* -  Variables  - */
@@ -62,11 +99,18 @@ int liftButtonState;
 int emergencyButtonState;
 int speakerFreq;
 /* bool OPState = false; */
+float weight;
 
 // Delay en loop
 const int STATE_DELAY = 500;
+float MIN_WEIGHT = 5;
 //int randomState = 0; // test
 //const int TEST_LED = 13;
+
+//HX711 constructor:
+HX711_ADC LoadCell(HX711_dout, HX711_sck);
+const int calVal_eepromAdress = 0;
+unsigned long t = 0;
 
 // Maquina de estados principal
 StateMachine machine = StateMachine();
@@ -113,8 +157,8 @@ void setup()
     // Pinmodes
     pinMode(doorSwitch, INPUT_PULLUP); // Pin de puerta en modo input pullup
     pinMode(speaker, OUTPUT); // Pin de bocina en modo salida
-    pinMode(redLED, OUTPUT);
-    pinMode(greenLED, OUTPUT);
+    pinMode(relay_RedLED, OUTPUT);
+    pinMode(relay_GreenLED, OUTPUT);
 
     // Asignando antirrebotes de los botones y switches (count falling)
     onSwitch.setDebounceTime(50);
@@ -124,6 +168,14 @@ void setup()
     compactButton.setCountMode(COUNT_FALLING);
     liftButton.setCountMode(COUNT_FALLING);
     emergencyButton.setCountMode(COUNT_FALLING);
+
+   // Configuración celda de carga
+    LoadCell.begin();
+    unsigned long stabilizingtime = 2000; // preciscion right after power-up can be improved by adding a few seconds of stabilizing time
+    boolean _tare = true; //set this to false if you don't want tare to be performed in the next step
+    LoadCell.start(stabilizingtime, _tare);
+    while (!LoadCell.update());
+        calibrarCelda(); //start calibration procedure
 
     /* ---------------------- */
     /*     -  test  - */

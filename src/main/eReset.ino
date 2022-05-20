@@ -1,6 +1,10 @@
 //==================< Reset >=====================
 void stateReset(){
+    vaciarDiagramaEstados();
+    sbReset.Set_background_crop_picc(4);    
     Serial.println("Reiniciar");
+    tEstado.setText("Reiniciando...");
+    actualizarReloj();
     reiniciar();
 }
 
@@ -12,4 +16,3 @@ bool transitionResetS0(){
     // Reiniciar carrera, luces y alarma
     return true;
 }
-

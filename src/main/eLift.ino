@@ -16,11 +16,18 @@ void stateLift(){
 
      do {
         operando();
+        vaciarDiagramaEstados();
+        sbLift.Set_background_crop_picc(4);
+        tEstado.setText("Levantando");
+        actualizarReloj();
 
         liftButton.loop();
         emergencyButton.loop();
         liftButtonState = liftButton.getState(); // Actualizar estado botón levantar
         emergencyButtonState = emergencyButton.getState(); // Actualizar estado boton emergencia
+
+        digitalWrite(relay_R, HIGH);
+        
     } while (isCompactPressed() && !isLiftPressed() && !isEmergencyPressed());
 }
 
@@ -33,6 +40,8 @@ bool transitionLiftHalt(){
         /* -  test  - */
         /*  ---------------------- */
         Serial.println("Accion: " + accion + " | hacia alto");
+
+        digitalWrite(relay_R, LOW);
 
         return true;
     }
@@ -48,6 +57,7 @@ bool transitionLiftIdle(){
         /* -  test  - */
         /*  ---------------------- */
         Serial.println("Accion: " + accion + " | hacia inactivo");
+        digitalWrite(relay_R, LOW);
 
         return true;
     }
@@ -63,6 +73,8 @@ bool transitionLiftStop(){
         /* -  test  - */
         /*  ---------------------- */
         Serial.println("Accion: " + accion + " | hacia paro de emergencia");
+
+        digitalWrite(relay_R, LOW);
 
         return true;
     }
