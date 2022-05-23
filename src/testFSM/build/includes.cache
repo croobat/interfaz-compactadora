@@ -2,25 +2,35 @@
   {
     "Sourcefile": null,
     "Include": "",
-    "Includepath": "/home/tony/.arduino15/packages/arduino/hardware/avr/1.8.4/cores/arduino"
+    "Includepath": "/home/tony/.arduino15/packages/arduino/hardware/avr/1.8.5/cores/arduino"
   },
   {
     "Sourcefile": null,
     "Include": "",
-    "Includepath": "/home/tony/.arduino15/packages/arduino/hardware/avr/1.8.4/variants/standard"
+    "Includepath": "/home/tony/.arduino15/packages/arduino/hardware/avr/1.8.5/variants/standard"
   },
   {
-    "Sourcefile": "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/testFSM/build/sketch/testFSM.ino.cpp",
-    "Include": "YA_FSM.h",
-    "Includepath": "/home/tony/Arduino/libraries/libFSM/src"
+    "Sourcefile": "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/testFSMjrullan/build/sketch/testFSMjrullan.ino.cpp",
+    "Include": "StateMachine.h",
+    "Includepath": "/home/tony/Arduino/libraries/StateMachine/src"
   },
   {
-    "Sourcefile": "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/testFSM/build/sketch/testFSM.ino.cpp",
+    "Sourcefile": "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/testFSMjrullan/build/sketch/testFSMjrullan.ino.cpp",
+    "Include": "LinkedList.h",
+    "Includepath": "/home/tony/Arduino/libraries/LinkedList"
+  },
+  {
+    "Sourcefile": "/home/tony/OneDrive - Instituto Politecnico Nacional/Documents/UPIIZ/10º Semestre/Trabajo Terminal 2/interfaz-compactadora/FSM/testFSMjrullan/build/sketch/testFSMjrullan.ino.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "/home/tony/Arduino/libraries/libFSM/src/YA_FSM.cpp",
+    "Sourcefile": "/home/tony/Arduino/libraries/StateMachine/src/State.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/tony/Arduino/libraries/StateMachine/src/StateMachine.cpp",
     "Include": "",
     "Includepath": null
   }

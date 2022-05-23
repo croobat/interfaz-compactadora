@@ -1,7 +1,7 @@
 #include <ezButton.h>
 
-ezButton compactButton(39);
-ezButton liftButton(37);
+ezButton compactButton(37);
+ezButton liftButton(33);
 ezButton emergencyButton(35);
 
 void setup() {
