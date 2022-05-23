@@ -14,13 +14,16 @@ void stateIdle(){
     while (doorState == 1) {delay(10);}
 
     do {
-       noOperando();
-       actualizarPantalla();
-       sbIdle.Set_background_crop_picc(4);
-
+        noOperando();
+        actualizarPantalla();
+        sbIdle.Set_background_crop_picc(4);
+       
+        Serial.println(isNextionResetPressed);
+       
+        nexLoop(nex_listen_list);
         onSwitch.loop(); // Switch de encendido
         doorState = digitalRead(doorSwitch); // Switch de puerta
-    } while (!onSwitch.isReleased() && !isDoorOpen());
+    } while (!onSwitch.isReleased() && !isDoorOpen() && !isNextionResetPressed);
 }
 
 //-----< De Inactivo a Rellenar >-----
@@ -40,7 +43,8 @@ bool transitionIdleFill(){
 
 //-----< De Inactivo a Reiniciar >-----
 bool transitionIdleReset(){
-    if (!isSwitchOn()) {
+    if (!isSwitchOn() || isNextionResetPressed) {
+        isNextionResetPressed = false;
         // Interruptor de apagado
 
         /* ---------------------- */

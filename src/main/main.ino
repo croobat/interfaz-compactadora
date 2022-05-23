@@ -68,8 +68,11 @@ const int HX711_sck = 5;
 /* --------------- */
 /* -  Software objects  - */
 /* --------------- */
+// Start page
+NexPage startPage = NexPage(2, 0, "startPage");
+
 // Main page
-NexButton bOff = NexButton(0, 8, "bApagar");
+NexPage mainPage = NexPage(0, 0, "mainPage");
 NexButton bReset = NexButton(0, 9, "bReiniciar");
 NexText tPeso = NexText (0, 11, "tPeso");
 NexText tEstado = NexText (0, 12, "tEstado");
@@ -91,6 +94,21 @@ NexButton sbHalt = NexButton(1, 9, "Halt");
 NexButton sbStop = NexButton(1, 10, "Stop");
 NexButton sbReset = NexButton(1, 11, "Reset");
 
+// Nextion button event list
+NexTouch *nex_listen_list[] = {
+      &bReset,
+      //
+      NULL
+};
+
+/* --------------- */
+/* -  Parametros  - */
+/* --------------- */
+int SPEAKER_FREQ = 600;
+int CYL_STEP = 20;
+const int STATE_DELAY = 50;
+float TARGET_WEIGHT = 20000;
+
 /* --------------- */
 /* -  Variables  - */
 /* --------------- */
@@ -99,21 +117,20 @@ int doorState;
 int compactButtonState;
 int liftButtonState;
 int emergencyButtonState;
-int speakerFreq = 600;
 bool isSpeakerON = false;
 bool beepFlag = true;
 int cylStroke = 0;
-int cylStep = 20;
 bool cylReachedLim = false;
 int cycles = 0;
 unsigned long currentMillis;
 const char* actualState = "";
 /* bool OPState = false; */
+const char* weightMeasureUnit = "kg";
 float weight = 0;
 
+bool isNextionResetPressed = false;
+
 // Delay en loop
-const int STATE_DELAY = 50;
-float TARGET_WEIGHT = 20000;
 //int randomState = 0; // test
 //const int TEST_LED = 13;
 
@@ -240,6 +257,11 @@ void setup()
 
     Stop->    addTransition(&transitionStopReset,     Reset);       // Pulsar botón de paro
 
+    // Inicializando componentes nextion
+    nexInit();
+        // Setup para botones nextion
+        bReset.attachPop(bResetPopCallback, &bReset);
+
 }
 
 
@@ -248,10 +270,10 @@ void setup()
 /* ---------------------- */
 void loop() {
     // Llamando loops de botones y switches
-    onSwitch.loop();
-    compactButton.loop();
-    liftButton.loop();
-    emergencyButton.loop();
+//    onSwitch.loop();
+//    compactButton.loop();
+//    liftButton.loop();
+//    emergencyButton.loop();
     
     // Iniciando maquina de estados
     machine.run();

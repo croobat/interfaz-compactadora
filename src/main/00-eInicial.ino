@@ -28,7 +28,7 @@ bool transitionS0Idle(){
         /* -  test  - */
         /*  ---------------------- */
 //        Serial.println("Accion: " + accion + " | hacia inactivo");
-
+        mainPage.show();
         return true;
     }
     return false;

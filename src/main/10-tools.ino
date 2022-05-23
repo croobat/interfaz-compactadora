@@ -48,9 +48,9 @@ bool isEmergencyPressed(){
 // Encender bocina
 void speakerON(){
     if (actualState == "Compactando") {
-        tone(speaker,speakerFreq);
+        tone(speaker,SPEAKER_FREQ);
     } else if (actualState == "Levantando") {
-        tone(speaker,speakerFreq-200);
+        tone(speaker,SPEAKER_FREQ-200);
     }
     else if (actualState == "Paro de emergencia") {
         playAlarm();
@@ -61,17 +61,17 @@ void speakerON(){
 }
 
 void playBeep(){
-    tone(speaker, speakerFreq + 100);
+    tone(speaker, SPEAKER_FREQ + 100);
     delay(10);
     noTone(speaker);
 }
 
 void playAlarm(){
-    for(int speakerFreqTemp=speakerFreq-50; speakerFreqTemp<speakerFreq; speakerFreqTemp++){
+    for(int speakerFreqTemp=SPEAKER_FREQ-50; speakerFreqTemp<SPEAKER_FREQ; speakerFreqTemp++){
             tone(speaker,speakerFreqTemp);
             delay(5);
         }
-        for(int speakerFreqTemp=speakerFreq; speakerFreqTemp>speakerFreq - 50; speakerFreqTemp--){
+        for(int speakerFreqTemp=SPEAKER_FREQ; speakerFreqTemp>SPEAKER_FREQ - 50; speakerFreqTemp--){
             tone(speaker,speakerFreqTemp);
             delay(5);
         }
@@ -114,7 +114,7 @@ void reiniciar(){
 
     while (cylStroke > 0) {
         digitalWrite(relay_R, LOW);
-        cylStroke = cylStroke - cylStep;
+        cylStroke = cylStroke - CYL_STEP;
         jProgress.setValue(cylStroke);
         delay(1000);
     } 
@@ -123,7 +123,13 @@ void reiniciar(){
 
     tEstado.setText("Reinicio completado");
     delay(1000);
+    startPage.show();
     playBeep();
+    delay(300);
+    playBeep();
+    delay(300);
+    playBeep();
+
 }
 
 void calibrarCelda(){
@@ -219,7 +225,8 @@ void actualizarPeso(){
 //      Serial.print("Load_cell output val: ");
 //      Serial.println(weight);
       String strWeight = String(weight, 2);
-      strWeight.concat(" kg");
+      strWeight.concat(" ");
+      strWeight.concat(weightMeasureUnit);
       tPeso.setText(strWeight.c_str());
       newDataReady = 0;
       t = millis();
@@ -272,7 +279,7 @@ void vaciarDiagramaEstados(){
 
 void incrementarCarrera(){
     if (cylStroke < 100) {
-        cylStroke = cylStroke + cylStep;
+        cylStroke = cylStroke + CYL_STEP;
         jProgress.setValue(cylStroke);
     }
     else {
@@ -283,7 +290,7 @@ void incrementarCarrera(){
 
 void disminuirCarrera(){
     if (cylStroke > 0) {
-        cylStroke = cylStroke - cylStep;
+        cylStroke = cylStroke - CYL_STEP;
         jProgress.setValue(cylStroke);
     }
     else {
@@ -299,10 +306,16 @@ void actualizarPantalla() {
       tEstado.setText(actualState);
       actualizarReloj();
       actualizarPeso();
+      jProgress.setValue(cylStroke);
       
       String strCycles = String(cycles);
       tCycles.setText(strCycles.c_str());
       vaciarDiagramaEstados();
+}
+
+void bResetPopCallback(void *ptr) {
+    isNextionResetPressed = true;
+    tEstado.setText("test");
 }
 
 /* ---------- */

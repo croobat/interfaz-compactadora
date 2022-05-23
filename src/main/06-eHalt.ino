@@ -2,7 +2,7 @@
 void stateHalt(){
 
     playBeep();
-    actualState = "Alto";
+    actualState = "Detenido";
         /* ---------------------- */
         /* -  test  - */
         /*  ---------------------- */
