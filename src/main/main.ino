@@ -10,6 +10,7 @@
 /* ---------------------- */
 /* -  Librerias  - */
 /* ---------------------- */
+//Math library
 #include <math.h>
 //State Machine library
 #include <StateMachine.h>
@@ -50,38 +51,47 @@
 #include <NexWaveform.h>
 
 /* --------------- */
-/* -  Hardware objects  - */
+/* -  Hardware definitions  - */
 /* --------------- */
 ezButton onSwitch(3);
-const int doorSwitch = 23;
-const int speaker = 9;
+ezButton compactButton(37);
+ezButton liftButton(33);
+ezButton emergencyButton(35);
+
 const int relay_RedLED = 46;
 const int relay_GreenLED = 42;
 const int relay_L = 28;
 const int relay_R = 29;
-ezButton compactButton(37);
-ezButton liftButton(33);
-ezButton emergencyButton(35);
+
+const int doorSwitch = 23;
+const int speaker = 9;
+
 const int HX711_dout = 4;
 const int HX711_sck = 5;
 
 /* --------------- */
-/* -  Software objects  - */
+/* -  Software definitions  - */
 /* --------------- */
 // Start page
 NexPage startPage = NexPage(2, 0, "startPage");
 
+
 // Main page
 NexPage mainPage = NexPage(0, 0, "mainPage");
+
 NexButton bReset = NexButton(0, 9, "bReiniciar");
-NexText tPeso = NexText (0, 11, "tPeso");
-NexText tEstado = NexText (0, 12, "tEstado");
-NexText tRuntime = NexText (0, 13, "tRuntime");
-NexText tCycles = NexText(0, 14, "tCiclos");
-NexProgressBar jProgress = NexProgressBar(0, 15, "jProgress");
+
 NexButton sbRedLed = NexButton(0, 16, "redLed");
 NexButton sbGreenLed = NexButton(0, 17, "greenLed");
 NexButton sbSoundLed = NexButton(0, 18, "soundLed");
+
+NexText tPeso = NexText (0, 11, "tPeso");
+NexText tState = NexText (0, 12, "tEstado");
+NexText tRuntime = NexText (0, 13, "tRuntime");
+NexText tCycles = NexText(0, 14, "tCiclos");
+
+NexProgressBar jProgress = NexProgressBar(0, 15, "jProgress");
+
 
 // State machine page
 NexButton sbS0 = NexButton(1, 3, "S0");
@@ -94,12 +104,21 @@ NexButton sbHalt = NexButton(1, 9, "Halt");
 NexButton sbStop = NexButton(1, 10, "Stop");
 NexButton sbReset = NexButton(1, 11, "Reset");
 
-// Nextion button event list
-NexTouch *nex_listen_list[] = {
-      &bReset,
-      //
-      NULL
-};
+
+// Config page
+NexButton bApply = NexButton(3, 4, "bAplicar");
+NexButton bCalcZero = NexButton(3, 15, "bCalcZero");
+NexButton bKg = NexButton(3, 16, "bKg");
+NexButton bLb = NexButton(3, 17, "bLb");
+NexButton bYesEEPROM = NexButton(3, 21, "bYesEEPROM");
+NexButton bNoEEPROM = NexButton(3, 22, "bNoEEPROM");
+
+NexNumber tConfWCal = NexNumber(3, 30, "tConfWCal");
+NexNumber tConfFreq = NexNumber(3, 31, "tConfFreq");
+NexNumber tConfDelay = NexNumber(3, 32, "tConfDelay");
+NexNumber tConfStep = NexNumber(3, 33, "tConfStep");
+NexNumber tConfWObj = NexNumber(3, 34, "tConfWObj");
+NexNumber tConfCalV = NexNumber(3, 35, "tConfCalV");
 
 /* --------------- */
 /* -  Parametros  - */
@@ -112,6 +131,9 @@ float TARGET_WEIGHT = 20000;
 /* --------------- */
 /* -  Variables  - */
 /* --------------- */
+const char* actualState = "";
+
+//Hardware State flags
 int onSwitchState;
 int doorState;
 int compactButtonState;
@@ -119,21 +141,25 @@ int liftButtonState;
 int emergencyButtonState;
 bool isSpeakerON = false;
 bool beepFlag = true;
-int cylStroke = 0;
 bool cylReachedLim = false;
+
+//Software State Flags
+bool isNextionResetPressed = false;
+
+//GUI Variables
+//Cylinder
+int cylStroke = 0;
 int cycles = 0;
+//Runtime
 unsigned long currentMillis;
-const char* actualState = "";
-/* bool OPState = false; */
+//Weight
 const char* weightMeasureUnit = "kg";
 float weight = 0;
 
-bool isNextionResetPressed = false;
 
-// Delay en loop
-//int randomState = 0; // test
-//const int TEST_LED = 13;
-
+/* --------------- */
+/* -  Constructores  - */
+/* --------------- */
 //HX711 constructor:
 HX711_ADC LoadCell(HX711_dout, HX711_sck);
 const int calVal_eepromAdress = 0;
@@ -142,7 +168,11 @@ unsigned long t = 0;
 // Maquina de estados principal
 StateMachine machine = StateMachine();
 
-// Definición de estados de la maquina, funciones definidas abajo
+
+/* --------------- */
+/* -  Máquina de estados  - */
+/* --------------- */
+// Definición de estados de la máquina, funciones definidas abajo
 State* S0       = machine.addState(&state0);
 State* Idle     = machine.addState(&stateIdle);
 State* Fill     = machine.addState(&stateFill);
@@ -153,26 +183,19 @@ State* Halt     = machine.addState(&stateHalt);
 State* Reset    = machine.addState(&stateReset);
 State* Stop     = machine.addState(&stateStop);
 
-// Debug
-//String accion = "";
-//String accion2 = "";
-//String accion3 = "";
-/* const char* onswitch = "switch encendido"; */
-/* const char* offswitch = "switch apagado"; */
-/* const char* opendoor = "abrir puerta"; */
-/* const char* closedoor = "cerrar puerta"; */
-//const char* cylbottom = "lim";
-//const char* cylmid = "mid";
-/* const char* cyltop = "cilindro en limite"; */
-//const char* kg20carton = "mas";
-//const char* lesskg20carton = "menos";
-/* const char* pushcompactbutton = "pulsar compactar"; */
-/* const char* releasecompactbutton = "soltar compactar"; */
-/* const char* pushliftbutton = "pulsar levantar"; */
-/* const char* releaseliftbutton = "soltar levantar"; */
-/* const char* emergencystop = "paro de emergencia"; */
-
-
+/* --------------- */
+/* -  Nextion lista de eventos  - */
+/* --------------- */
+NexTouch *nex_listen_list[] = {
+      &bReset,
+      &bApply,
+      &bCalcZero,
+      &bKg,
+      &bLb,
+      &bYesEEPROM,
+      &bNoEEPROM,
+      NULL
+};
 
 /* ---------------------- */
 /* -  Setup inicial  - */
@@ -181,7 +204,7 @@ void setup()
 {
     Serial.begin(9600);
 
-    // Pinmodes
+    // Configuración de pines hardware
     pinMode(doorSwitch, INPUT_PULLUP); // Pin de puerta en modo input pullup
     pinMode(speaker, OUTPUT); // Pin de bocina en modo salida
     pinMode(relay_L, OUTPUT);
@@ -189,7 +212,7 @@ void setup()
     pinMode(relay_RedLED, OUTPUT);
     pinMode(relay_GreenLED, OUTPUT);
 
-    // Asignando antirrebotes de los botones y switches (count falling)
+    // Configuración de botónes (antirebotes y estilo de conteo
     onSwitch.setDebounceTime(5);
     compactButton.setDebounceTime(5);
     liftButton.setDebounceTime(5);
@@ -197,6 +220,7 @@ void setup()
     compactButton.setCountMode(COUNT_FALLING);
     liftButton.setCountMode(COUNT_FALLING);
     emergencyButton.setCountMode(COUNT_FALLING);
+
 
    // Configuración celda de carga
 
@@ -206,60 +230,51 @@ void setup()
 //        //EEPROM.get(calVal_eepromAdress, calibrationValue); // uncomment this if you want to fetch this value from eeprom
 
     LoadCell.begin();
-    unsigned long stabilizingtime = 2000; // precision right after power-up can be improved by adding a few seconds of stabilizing time
-    boolean _tare = true; //set this to false if you don't want tare to be performed in the next step
+    unsigned long stabilizingtime = 2000; // Tiempo de estabilización tras encendido de máquina
+    boolean _tare = true; // Cambiar a false para no calcular tara en el siguiente paso
     LoadCell.start(stabilizingtime, _tare);
    // while (!LoadCell.update());
         //calibrarCelda(); //start calibration procedure
 
-    /* ---------------------- */
-    /*     -  test  - */
-    /* ---------------------- */
-    //pinMode(TEST_LED, OUTPUT); // test
-    //randomSeed(A0); // test
-    /* delay(0); */
-    /* Serial.println("Introducir la accion como aparece en main - debug (switch encendido, soltar levantar...)"); */
-    /* Serial.println("Si se necesita más de una acción dar prioridad según aparezca (esto mientras testeamos)"); */
-    /* Serial.println("Más importante > Medio importante > Menos importante"); */
-//    Serial.println("Iniciando maquina");
 
-    reiniciar();
+    reiniciar();  // Reiniciar máquina tras encendido en caso de un apagado incorrecto
 
     /* ---------------------- */
-    /* -  Transiciones  - */
+    /* -  Configuración de transiciones de estados  - */
     /* ---------------------- */
 
   //Edo. inicial           Condición booleana       Edo. futuro
-    S0->      addTransition(&transitionS0Idle,        Idle);        // Al encender
+    S0->           addTransition(&transitionS0Idle,            Idle);           // Al encender
 
-    Idle->    addTransition(&transitionIdleFill,      Fill);        // Al abrir la puerta
-    Idle->    addTransition(&transitionIdleReset,     Reset);       // Al apagar
+    Idle->         addTransition(&transitionIdleFill,             Fill);            // Al abrir la puerta
+    Idle->         addTransition(&transitionIdleReset,        Reset);       // Al apagar
 
-    Fill->    addTransition(&transitionFillCompact,   Compact);     // < 20 kg cartón & cerrar puerta & Pulsar botón compactar
-    Fill->    addTransition(&transitionFillLift,      Lift);        // < 20 kg cartón & cerrar puerta & Pulsar botón levantar
-    Fill->    addTransition(&transitionFillExtract,   Extract);     // >= 20 kg carton & abrir puerta
+    Fill->           addTransition(&transitionFillCompact,    Compact);   // < 20 kg cartón & cerrar puerta & Pulsar botón compactar
+    Fill->           addTransition(&transitionFillLift,             Lift);           // < 20 kg cartón & cerrar puerta & Pulsar botón levantar
+    Fill->           addTransition(&transitionFillExtract,       Extract);     // >= 20 kg carton & abrir puerta
 
-    Extract-> addTransition(&transitionExtractIdle,   Idle);        // Al cerrar la puerta
+    Extract->    addTransition(&transitionExtractIdle,      Idle);          // Al cerrar la puerta
 
-    Compact-> addTransition(&transitionCompactLift,   Lift);        // Pulsar botón levantar
-    Compact-> addTransition(&transitionCompactHalt,   Halt);        // Soltar botón compactar
-    Compact-> addTransition(&transitionCompactStop,   Stop);        // Pulsar paro de emergencia
+    Compact-> addTransition(&transitionCompactLift,    Lift);           // Pulsar botón levantar
+    Compact-> addTransition(&transitionCompactHalt,   Halt);          // Soltar botón compactar
+    Compact-> addTransition(&transitionCompactStop,  Stop);        // Pulsar paro de emergencia
 
-    Lift->    addTransition(&transitionLiftHalt,      Halt);        // carrera cilindro > 0 & soltar botón levantar
-    Lift->    addTransition(&transitionLiftIdle,      Idle);        // carrera cilindro = 0
-    Lift->    addTransition(&transitionLiftStop,      Stop);        // Pulsar paro de emergencia
+    Lift->          addTransition(&transitionLiftHalt,           Halt);          // carrera cilindro > 0 & soltar botón levantar
+    Lift->          addTransition(&transitionLiftIdle,            Idle);          // carrera cilindro = 0
+    Lift->          addTransition(&transitionLiftStop,          Stop);         // Pulsar paro de emergencia
 
-    Halt->    addTransition(&transitionHaltCompact,   Compact);     // Pulsar botón compactar
-    Halt->    addTransition(&transitionHaltLift,      Lift);        // Pulsar botón levantar
-    Halt->    addTransition(&transitionHaltStop,      Stop);        // Pulsar paro de emergencia
+    Halt->         addTransition(&transitionHaltCompact,   Compact);  // Pulsar botón compactar
+    Halt->         addTransition(&transitionHaltLift,            Lift);          // Pulsar botón levantar
+    Halt->         addTransition(&transitionHaltStop,         Stop);        // Pulsar paro de emergencia
 
-    Reset->   addTransition(&transitionResetS0,       S0);          // Tras reiniciar carrera, luces y alarma
+    Reset->      addTransition(&transitionResetS0,         S0);           // Tras reiniciar carrera, luces y alarma
 
-    Stop->    addTransition(&transitionStopReset,     Reset);       // Pulsar botón de paro
+    Stop->        addTransition(&transitionStopReset,      Reset);      // Pulsar botón de paro
+
 
     // Inicializando componentes nextion
     nexInit();
-        // Setup para botones nextion
+        // Asignando funciones a evento de soltar botón
         bReset.attachPop(bResetPopCallback, &bReset);
 
 }
@@ -269,12 +284,6 @@ void setup()
 /* -  Loop infinito  - */
 /* ---------------------- */
 void loop() {
-    // Llamando loops de botones y switches
-//    onSwitch.loop();
-//    compactButton.loop();
-//    liftButton.loop();
-//    emergencyButton.loop();
-    
     // Iniciando maquina de estados
     machine.run();
 

@@ -1,29 +1,29 @@
 //==================< Stop >=====================
 void stateStop(){
-  
-    playBeep();
+    // Definición de estado actual  
     actualState = "Paro de emergencia";
+    playBeep();
 
     do {
+        // Actualizar interfaz
         actualizarPantalla();
         sbStop.Set_background_crop_picc(4);
-        tEstado.Set_background_crop_picc(5);  
+        tState.Set_background_crop_picc(5);  
 
+        // Detectar cambios en actuadores    
         emergencyButton.loop();
-        emergencyButtonState = emergencyButton.getState(); // Actualizar estado boton compactar
+        emergencyButtonState = emergencyButton.getState();
         
     } while (isEmergencyPressed());
-//    Serial.println("Paro de emergencia");
-
 }
 
 //-----< De Paro a Inactivo >-----
 bool transitionStopReset(){
 //    if (!isEmergencyPressed()) {
     if (!isEmergencyPressed()) {
-        tEstado.Set_background_crop_picc(1);
+        //Paro de emergencia presionado
+        tState.Set_background_crop_picc(1);
         return true;
     }
-//    Serial.println("Emergencia: Reiniciando sistema");
-      return false;
+    return false;
 }

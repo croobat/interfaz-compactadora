@@ -1,22 +1,18 @@
 //==================< Extract >=====================
 void stateExtract(){
-
-    playBeep();
+    // Definición de estado actual
     actualState = "Extrayendo bloque";
-        /* ---------------------- */
-        /* -  test  - */
-        /*  ---------------------- */
-//        Serial.println("Extraer");
-        /* while (Serial.available() == 0) {} */
-        /* accion = Serial.readStringUntil('\n'); */
-        /* accion.trim(); */
+    playBeep();
 
     do {
+        // Actualizar interfaz
         noOperando();
         actualizarPantalla();
         sbExtract.Set_background_crop_picc(4);
 
-        doorState = digitalRead(doorSwitch); // Switch de puerta
+        // Detectar cambios en actuadores
+        doorState = digitalRead(doorSwitch);
+        
     } while (doorState == 1);
 }
 
@@ -24,12 +20,6 @@ void stateExtract(){
 bool transitionExtractIdle(){
     if (!isDoorOpen()) {
         // Sensor magnético cerrado
-
-        /* ---------------------- */
-        /* -  test  - */
-        /*  ---------------------- */
-//        Serial.println("Accion: " + accion + " | hacia inactivo");
-
         return true;
     }
     return false;

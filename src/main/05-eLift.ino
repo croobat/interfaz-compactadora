@@ -1,37 +1,27 @@
 //==================< Lift >=====================
 void stateLift(){
-
-    playBeep();
+    // Definición de estado actual
     actualState = "Levantando";
-    /* ---------------------- */
-    /* -  test  - */
-    /*  ---------------------- */
-//        Serial.println("Levantar");
-//        Serial.println("Accion 1 (cilindro): ");
-//        while (Serial.available() == 0) {}
-//        accion = Serial.readStringUntil('\n');
-//        accion.trim();
-    /* Serial.println("Accion 2: "); */
-    /* while (Serial.available() == 0) {} */
-    /* accion2 = Serial.readStringUntil('\n'); */
-    /* accion2.trim(); */
+    playBeep();
 
-     do {
+    do {
+        // Actualizar interfaz
         operando();
         actualizarPantalla();
         sbLift.Set_background_crop_picc(4);
         disminuirCarrera();
 
+        // Activar cilindro (levantar)
         digitalWrite(relay_R, LOW);
     
+        // Detectar cambios en actuadores    
         compactButton.loop();
         liftButton.loop();
         emergencyButton.loop();
-        emergencyButtonState = emergencyButton.getState(); // Actualizar estado boton emergencia
+        emergencyButtonState = emergencyButton.getState();
         compactButtonState = compactButton.getState();
-        liftButtonState = liftButton.getState(); // Actualizar estado botón levantar
-
-        
+        liftButtonState = liftButton.getState();
+                
     } while (!isCompactPressed() && isLiftPressed() && !isEmergencyPressed());
 }
 
@@ -39,14 +29,7 @@ void stateLift(){
 bool transitionLiftHalt(){
     if (cylStroke > 0 && !isLiftPressed()) {
         // carrera cilindro > 0 & soltar botón levantar
-
-        /* ---------------------- */
-        /* -  test  - */
-        /*  ---------------------- */
-//        Serial.println("Accion: " + accion + " | hacia alto");
-
-        digitalWrite(relay_R, HIGH);
-
+        digitalWrite(relay_R, HIGH);     // Desactivar cilindro
         return true;
     }
     return false;
@@ -56,14 +39,7 @@ bool transitionLiftHalt(){
 bool transitionLiftIdle(){
     if (cylStroke == 0) {
         // carrera cilindro = 0
-
-        /* ---------------------- */
-        /* -  test  - */
-        /*  ---------------------- */
-//        Serial.println("Accion: " + accion + " | hacia inactivo");
-        
-        digitalWrite(relay_R, HIGH);
-
+        digitalWrite(relay_R, HIGH);     // Desactivar cilindro
         return true;
     }
     return false;
@@ -73,14 +49,7 @@ bool transitionLiftIdle(){
 bool transitionLiftStop(){
     if (isEmergencyPressed()) {
         // Pulsar paro de emergencia
-
-        /* ---------------------- */
-        /* -  test  - */
-        /*  ---------------------- */
-//        Serial.println("Accion: " + accion + " | hacia paro de emergencia");
-
-        digitalWrite(relay_R, HIGH);
-
+        digitalWrite(relay_R, HIGH);     // Desactivar cilindro
         return true;
     }
     return false;

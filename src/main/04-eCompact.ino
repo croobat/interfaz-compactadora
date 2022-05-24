@@ -1,32 +1,27 @@
 //==================< Compact >=====================
 void stateCompact(){
-    
-    playBeep();
+    // Definición de estado actual    
     actualState = "Compactando";
-    /* ---------------------- */
-    /* -  test  - */
-    /*  ---------------------- */
-//    Serial.println("Compactar");
-    /* while (Serial.available() == 0) {} */
-    /* accion = Serial.readStringUntil('\n'); */
-    /* accion.trim(); */
+    playBeep();
 
     do {
+        // Actualizar interfaz
         operando();
         actualizarPantalla();
         sbCompact.Set_background_crop_picc(4);
         incrementarCarrera();
-
+        
+        // Activar cilindro (compactar)
         digitalWrite(relay_L, LOW);
-    
+
+        // Detectar cambios en actuadores    
         compactButton.loop();
         liftButton.loop();
         emergencyButton.loop();
-        emergencyButtonState = emergencyButton.getState(); // Actualizar estado boton compactar
-        compactButtonState = compactButton.getState(); // Actualizar estado boton compactar
-        liftButtonState = liftButton.getState(); // Actualizar estado botón levantar
-
-      
+        emergencyButtonState = emergencyButton.getState();
+        compactButtonState = compactButton.getState();
+        liftButtonState = liftButton.getState();
+        
     } while (isCompactPressed() && !isLiftPressed() && !isEmergencyPressed());
 }
 
@@ -34,14 +29,7 @@ void stateCompact(){
 bool transitionCompactLift(){
     if (isLiftPressed()) {
         // Pulsar botón levantar
-
-        /* ---------------------- */
-        /* -  test  - */
-        /*  ---------------------- */
-//        Serial.println("Accion: " + accion + " | hacia levantar");
-        
-        digitalWrite(relay_L, HIGH);
-
+        digitalWrite(relay_L, HIGH);     // Desactivar cilindro
         return true;
     }
     return false;
@@ -51,14 +39,7 @@ bool transitionCompactLift(){
 bool transitionCompactHalt(){
     if (!isCompactPressed()) {
         // Soltar botón compactar
-
-        /* ---------------------- */
-        /* -  test  - */
-        /*  ---------------------- */
-//        Serial.println("Accion: " + accion + " | hacia alto");
-        
-        digitalWrite(relay_L, HIGH);
-
+        digitalWrite(relay_L, HIGH);     // Desactivar cilindro
         return true;
     }
     return false;
@@ -68,14 +49,7 @@ bool transitionCompactHalt(){
 bool transitionCompactStop(){
     if (isEmergencyPressed()) {
         // Pulsar paro de emergencia
-
-        /* ---------------------- */
-        /* -  test  - */
-        /*  ---------------------- */
-//        Serial.println("Accion: " + accion + " | hacia paro de emergencia");
-        
-        digitalWrite(relay_L, HIGH);
-
+        digitalWrite(relay_L, HIGH);     // Desactivar cilindro
         return true;
     }
     return false;

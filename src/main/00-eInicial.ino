@@ -1,33 +1,23 @@
 //==================< S0 >=====================
 void state0(){
-    
+    // Definición de estado actual
     actualState = "Inicial";
-        /* ---------------------- */
-        /* -  test  - */
-        /*  ---------------------- */
-//        Serial.println("Inicial");
-        /* while (Serial.available() == 0) {} */
-        /* accion = Serial.readStringUntil('\n'); */
-        /* accion.trim(); */
 
     do {
+        // Actualizar interfaz
         actualizarPantalla();
         sbS0.Set_background_crop_picc(4);
+
+        // Detectar cambios en actuadores
+        onSwitch.loop();
         
-        onSwitch.loop(); // Switch de encendido
     } while (!onSwitch.isPressed());
 }
 
 //-----< De S0 a Inactivo >-----
 bool transitionS0Idle(){
-    /* if (compareString("onswitch")) { */
     if (isSwitchOn()) {
         // Interruptor de encendido
-
-        /* ---------------------- */
-        /* -  test  - */
-        /*  ---------------------- */
-//        Serial.println("Accion: " + accion + " | hacia inactivo");
         mainPage.show();
         return true;
     }

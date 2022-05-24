@@ -1,28 +1,23 @@
 //==================< Idle >=====================
 void stateIdle(){
-
-    playBeep();
+    // Definición de estado actual
     actualState = "Inactivo";
-        /* ---------------------- */
-        /* -  test  - */
-        /*  ---------------------- */
-//        Serial.println("Inactivo");
-        /* while (Serial.available() == 0) {} */
-        /* accion = Serial.readStringUntil('\n'); */
-        /* accion.trim(); */
+    playBeep();
 
     while (doorState == 1) {delay(10);}
 
     do {
+        // Actualizar interfaz
         noOperando();
         actualizarPantalla();
         sbIdle.Set_background_crop_picc(4);
-       
-        Serial.println(isNextionResetPressed);
-       
+
+        // Detectar cambios en HMI
         nexLoop(nex_listen_list);
-        onSwitch.loop(); // Switch de encendido
-        doorState = digitalRead(doorSwitch); // Switch de puerta
+        // Detectar cambios en actuadores
+        onSwitch.loop();
+        doorState = digitalRead(doorSwitch);
+        
     } while (!onSwitch.isReleased() && !isDoorOpen() && !isNextionResetPressed);
 }
 
@@ -30,12 +25,6 @@ void stateIdle(){
 bool transitionIdleFill(){
     if (isDoorOpen()) {
         // Sensor magnético abierto
-
-        /* ---------------------- */
-        /* -  test  - */
-        /*  ---------------------- */
-//        Serial.println("Accion: " + accion + " | hacia rellenar");
-
         return true;
     }
     return false;
@@ -46,12 +35,6 @@ bool transitionIdleReset(){
     if (!isSwitchOn() || isNextionResetPressed) {
         isNextionResetPressed = false;
         // Interruptor de apagado
-
-        /* ---------------------- */
-        /* -  test  - */
-        /*  ---------------------- */
-//        Serial.println("Accion: " + accion + " | hacia reiniciar");
-
         return true;
     }
     return false;
