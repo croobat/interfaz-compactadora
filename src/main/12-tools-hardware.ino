@@ -25,13 +25,13 @@ void reiniciar(){
     digitalWrite(relay_R, HIGH);     // Desactivar cilindro
 
     tState.setText("Reinicio completado");
-    delay(1000);
+    delay(3000);
     startPage.show();
     
     playBeep();
-    delay(300);
+    delay(400);
     playBeep();
-    delay(300);
+    delay(400);
     playBeep();
 
 }
