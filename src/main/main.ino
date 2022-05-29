@@ -244,32 +244,32 @@ void setup()
     /* ---------------------- */
 
   //Edo. inicial           Condición booleana       Edo. futuro
-    S0->        addTransition(&transitionS0Idle,        Idle);           // Al encender
+    S0->        addTransition(&transitionS0Idle,        Idle);      // Al encender
 
-    Idle->      addTransition(&transitionIdleFill,      Fill);            // Al abrir la puerta
-    Idle->      addTransition(&transitionIdleReset,     Reset);       // Al apagar
+    Idle->      addTransition(&transitionIdleFill,      Fill);      // Al abrir la puerta
+    Idle->      addTransition(&transitionIdleReset,     Reset);     // Al apagar
 
     Fill->      addTransition(&transitionFillCompact,   Compact);   // < 20 kg cartón & cerrar puerta & Pulsar botón compactar
-    Fill->      addTransition(&transitionFillLift,      Lift);           // < 20 kg cartón & cerrar puerta & Pulsar botón levantar
-    Fill->      addTransition(&transitionFillExtract,   Extract);     // >= 20 kg carton & abrir puerta
+    Fill->      addTransition(&transitionFillLift,      Lift);      // < 20 kg cartón & cerrar puerta & Pulsar botón levantar
+    Fill->      addTransition(&transitionFillExtract,   Extract);   // >= 20 kg carton & abrir puerta
 
-    Extract->   addTransition(&transitionExtractIdle,   Idle);          // Al cerrar la puerta
+    Extract->   addTransition(&transitionExtractIdle,   Idle);      // Al cerrar la puerta
 
-    Compact->   addTransition(&transitionCompactLift,   Lift);           // Pulsar botón levantar
-    Compact->   addTransition(&transitionCompactHalt,   Halt);          // Soltar botón compactar
-    Compact->   addTransition(&transitionCompactStop,   Stop);        // Pulsar paro de emergencia
+    Compact->   addTransition(&transitionCompactLift,   Lift);      // Pulsar botón levantar
+    Compact->   addTransition(&transitionCompactHalt,   Halt);      // Soltar botón compactar
+    Compact->   addTransition(&transitionCompactStop,   Stop);      // Pulsar paro de emergencia
 
-    Lift->      addTransition(&transitionLiftHalt,      Halt);          // carrera cilindro > 0 & soltar botón levantar
-    Lift->      addTransition(&transitionLiftIdle,      Idle);          // carrera cilindro = 0
-    Lift->      addTransition(&transitionLiftStop,      Stop);         // Pulsar paro de emergencia
+    Lift->      addTransition(&transitionLiftHalt,      Halt);      // carrera cilindro > 0 & soltar botón levantar
+    Lift->      addTransition(&transitionLiftIdle,      Idle);      // carrera cilindro = 0
+    Lift->      addTransition(&transitionLiftStop,      Stop);      // Pulsar paro de emergencia
 
-    Halt->      addTransition(&transitionHaltCompact,   Compact);  // Pulsar botón compactar
-    Halt->      addTransition(&transitionHaltLift,      Lift);          // Pulsar botón levantar
-    Halt->      addTransition(&transitionHaltStop,      Stop);        // Pulsar paro de emergencia
+    Halt->      addTransition(&transitionHaltCompact,   Compact);   // Pulsar botón compactar
+    Halt->      addTransition(&transitionHaltLift,      Lift);      // Pulsar botón levantar
+    Halt->      addTransition(&transitionHaltStop,      Stop);      // Pulsar paro de emergencia
 
-    Reset->     addTransition(&transitionResetS0,       S0);           // Tras reiniciar carrera, luces y alarma
+    Reset->     addTransition(&transitionResetS0,       S0);        // Tras reiniciar carrera, luces y alarma
 
-    Stop->      addTransition(&transitionStopReset,     Reset);      // Pulsar botón de paro
+    Stop->      addTransition(&transitionStopReset,     Reset);     // Pulsar botón de paro
 
 
     // Inicializando componentes nextion

@@ -2,11 +2,13 @@
 void state0(){
     // Definición de estado actual
     actualState = "Inicial";
+    startPage.show();
 
     do {
         // Actualizar interfaz
         actualizarPantalla();
         sbS0.Set_background_crop_picc(4);
+        startPage.show();
 
         // Detectar cambios en actuadores
         onSwitch.loop();
