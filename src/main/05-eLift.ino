@@ -3,6 +3,7 @@ void stateLift(){
     // Definición de estado actual
     actualState = "Levantando";
     playBeep();
+    LoadCell.tareNoDelay();
 
     do {
         // Actualizar interfaz

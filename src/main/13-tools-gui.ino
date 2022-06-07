@@ -25,7 +25,14 @@ void actualizarPeso(){
       String strWeight = String(weight, 2);
       strWeight.concat(" ");
       strWeight.concat(weightMeasureUnit);
-      tPeso.setText(strWeight.c_str());
+      String lines = "----";
+      String tarando = "Tarando...";
+      if (actualState == "Inactivo"){
+        tPeso.setText(strWeight.c_str());
+      } else {
+        tPeso.setText(lines.c_str());
+      }
+      //tPeso.setText(strWeight.c_str());
 
       newDataReady = 0;
       t = millis();

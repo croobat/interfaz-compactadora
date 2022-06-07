@@ -4,6 +4,7 @@ void stateCompact(){
     actualState = "Compactando";
     playBeep();
 
+
     do {
         // Actualizar interfaz
         operando();

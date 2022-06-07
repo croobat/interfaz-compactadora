@@ -54,3 +54,13 @@ bool transitionFillExtract(){
     }
     return false;
 }
+
+//-----< De Rellenar a Reiniciar >-----
+bool transitionFillReset(){
+    if (!isSwitchOn() || isNextionResetPressed) {
+        isNextionResetPressed = false;
+        // Interruptor de apagado
+        return true;
+    }
+    return false;
+}

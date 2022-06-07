@@ -6,6 +6,11 @@ void stateIdle(){
 
     while (doorState == 1) {delay(10);}
 
+    //boolean _resume = false;
+    //while (_resume == false) {
+
+   // }
+    
     do {
         // Actualizar interfaz
         noOperando();

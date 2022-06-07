@@ -165,9 +165,9 @@ HX711_ADC LoadCell(HX711_dout, HX711_sck);
 const int calVal_eepromAdress = 0;
 unsigned long t = 0;
 
+
 // Maquina de estados principal
 StateMachine machine = StateMachine();
-
 
 /* --------------- */
 /* -  Máquina de estados  - */
@@ -229,15 +229,18 @@ void setup()
 //    #endif
 //        //EEPROM.get(calVal_eepromAdress, calibrationValue); // uncomment this if you want to fetch this value from eeprom
 
+    float calibrationValue; // calibration value
+    calibrationValue = -34800.0;
+    
     LoadCell.begin();
     unsigned long stabilizingtime = 2000; // Tiempo de estabilización tras encendido de máquina
     boolean _tare = true; // Cambiar a false para no calcular tara en el siguiente paso
     LoadCell.start(stabilizingtime, _tare);
-   // while (!LoadCell.update());
+    LoadCell.setCalFactor(calibrationValue);
+    while (!LoadCell.update());
         //calibrarCelda(); //start calibration procedure
 
-
-    reiniciar();  // Reiniciar máquina tras encendido en caso de un apagado incorrecto
+    //reiniciar();  // Reiniciar máquina tras encendido en caso de un apagado incorrecto
 
     /* ---------------------- */
     /* -  Configuración de transiciones de estados  - */
@@ -252,8 +255,10 @@ void setup()
     Fill->      addTransition(&transitionFillCompact,   Compact);   // < 20 kg cartón & cerrar puerta & Pulsar botón compactar
     Fill->      addTransition(&transitionFillLift,      Lift);      // < 20 kg cartón & cerrar puerta & Pulsar botón levantar
     Fill->      addTransition(&transitionFillExtract,   Extract);   // >= 20 kg carton & abrir puerta
+    Fill->      addTransition(&transitionFillReset,     Reset);     // Al apagar
 
     Extract->   addTransition(&transitionExtractIdle,   Idle);      // Al cerrar la puerta
+    Extract->   addTransition(&transitionExtractReset,  Reset);     // Al apagar
 
     Compact->   addTransition(&transitionCompactLift,   Lift);      // Pulsar botón levantar
     Compact->   addTransition(&transitionCompactHalt,   Halt);      // Soltar botón compactar

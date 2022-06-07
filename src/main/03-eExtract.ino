@@ -24,3 +24,13 @@ bool transitionExtractIdle(){
     }
     return false;
 }
+
+//-----< De Extraer a Reiniciar >-----
+bool transitionExtractReset(){
+    if (!isSwitchOn() || isNextionResetPressed) {
+        isNextionResetPressed = false;
+        // Interruptor de apagado
+        return true;
+    }
+    return false;
+}
